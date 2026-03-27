@@ -1,5 +1,5 @@
-import { Search } from 'lucide-react';
-import { Link } from 'react-router';
+import { SearchIcon } from 'lucide-react';
+import { Form, Link } from 'react-router';
 import { ModeToggle } from '~/components/mode-toggle';
 import { Button } from '~/components/ui/button';
 import { Field, FieldLabel } from '~/components/ui/field';
@@ -20,7 +20,7 @@ export default function Home() {
 						<ModeToggle />
 					</div>
 				</div>
-				<form>
+				<Form action="/search">
 					<Field orientation="horizontal" className="items-stretch gap-1.5">
 						<FieldLabel htmlFor="search" className="sr-only">
 							Search
@@ -28,16 +28,17 @@ export default function Home() {
 						<Input
 							id="search"
 							type="search"
+							name="q"
 							title="Search"
 							placeholder="Search"
 							autoComplete="off"
 							className="h-auto rounded-2xl px-4"
 						/>
 						<Button type="submit" size="icon-lg" className="size-11 rounded-2xl">
-							<Search />
+							<SearchIcon />
 						</Button>
 					</Field>
-				</form>
+				</Form>
 			</header>
 		</>
 	);

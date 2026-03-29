@@ -5,165 +5,83 @@ import { Button } from '~/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '~/components/ui/card';
 import { Field, FieldLabel } from '~/components/ui/field';
 import { Input } from '~/components/ui/input';
+import { Separator } from '~/components/ui/separator';
 import type { Route } from './+types/search';
 
 const sampleResponse = {
 	search_term: 'Nike',
-	knowledge_panel: {
-		name: 'Nike',
-		label: 'Unternehmen',
-		description: {
-			text: 'Nike Inc. ist ein 1964 bzw. 1971 gegründeter, international tätiger, US-amerikanischer Sportartikelhersteller. Sein Firmensitz ist Beaverton im US-Bundesstaat Oregon. Nike ist seit 1989 weltweit führender Sportartikelanbieter.',
-			url: 'https://de.wikipedia.org/wiki/Nike_(Unternehmen)',
-			site: 'Wikipedia',
-		},
-		image: {
-			url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:m8TS_7lVuPlJlM',
-			width: 225,
-			height: 225,
-			page_url:
-				'https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTNoD9oT_VnEYNKKeOor8U4qK5T1LF4bC2iRDD75fQdveQMHTUA',
-		},
-		info: [
-			{
-				title: 'Kundenservice',
-				labels: ['1 (800) 806-6453'],
-			},
-			{
-				title: 'Umsatz',
-				labels: ['37,4 Milliarden USD'],
-			},
-			{
-				title: 'Hauptsitz',
-				labels: ['Beaverton, Oregon'],
-			},
-			{
-				title: 'Gründer',
-				labels: ['Philip Knight', 'Bill Bowerman'],
-			},
-			{
-				title: 'CEO',
-				labels: ['John Donahoe (13. Jan. 2020–)'],
-			},
-			{
-				title: 'Tochtergesellschaften',
-				labels: [
-					'Converse',
-					'Nike Vision',
-					'Nike Korea LLC',
-					'NIKE Tailwind',
-					'NIKE Cortez',
-					'NIKE Pegasus',
-					'NIKE India Private Ltd',
-					'NIKE Huarache',
-					'Nike Deutschland',
-					'NIKE European Operations Netherlands B.V.',
-					'NIKE Japan Corp',
-					'NIKE Retail B.V.',
-					'NIKE Vietnam Co',
-					'NIKE USA Inc',
-					'NIKE Innovate C.V.',
-					'Jordan Brand',
-					'NIKE Flight',
-					'NIKE 360 Holding B.V.',
-					'NIKE Canada Corp',
-					'NIKE Australia Pty. Ltd',
-					'NIKE SALES (MALAYSIA) SDN. BHD.',
-					'NIKE IHM Inc',
-					'NIKE Waffle',
-					'NIKE Retail Services Inc',
-					'NIKE Lavadome',
-					'Nike Terra LLC',
-					'NIKE de Mexico S de R.L. de C.V.',
-					'NIKE Hong Kong Ltd',
-					'NIKE Trading Co B.V.',
-					'NIKE TN Inc',
-					'NIKE Canada Holding B.V.',
-					'NIKE Italy S.R.L.',
-					'NIKE GmbH',
-					'Nike Thailand',
-					'NIKE Japan Group LLC',
-					'NIKE Sourcing India Private Ltd',
-					'NIKE Europe Holding B.V.',
-					'NIKE Argentina Srl',
-				],
-			},
-			{
-				title: 'Gründung',
-				labels: ['25. Januar 1964, Eugene, Oregon'],
-			},
-		],
-	},
+	next_cursor: 'CAo=',
+	knowledge_panel: null,
 	results: [
 		{
-			position: 1,
 			url: 'https://www.nike.com/',
 			title: 'Nike. Just Do It. Nike.com',
 			description:
-				'Nike delivers innovative products, experiences and services to inspire athletes.',
+				"Inspiring the world's athletes, Nike delivers innovative products, experiences and services.",
+			timestamp: null,
 		},
 		{
-			position: 2,
-			url: 'https://www.instagram.com/nike/?hl=de',
-			title: 'Nike (@nike) • Instagram photos and videos',
+			url: 'https://www.instagram.com/nike/',
+			title: 'Nike (@nike) · Beaverton, OR - Instagram',
 			description:
-				'255m Followers, 147 Following, 1019 Posts - See Instagram photos and videos from Nike (@nike)',
+				'Introducing Nike Project Amplify,. Fast forward your stride—and the future of movement.',
+			timestamp: null,
 		},
 		{
-			position: 3,
-			url: 'https://twitter.com/nike',
-			title: 'Nike - Twitter',
-			description:
-				"Welcome to Nike FC. We're not a club. We're a community. If you love the game of football, you're a part of Nike FC. Let's change the game, ...",
-		},
-		{
-			position: 4,
 			url: 'https://en.wikipedia.org/wiki/Nike,_Inc.',
 			title: 'Nike, Inc. - Wikipedia',
 			description:
-				'Nike, Inc is an American multinational corporation that is engaged in the design, development, manufacturing, and worldwide marketing and sales of footwear, ...',
+				"It is the world's largest supplier of athletic shoes and apparel and a major manufacturer of sports equipment, with revenue in excess of US$46 billion in its ...",
+			timestamp: null,
 		},
 		{
-			position: 5,
-			url: 'https://www.youtube.com/user/nike',
-			title: 'Nike - YouTube',
+			url: 'https://www.facebook.com/nike/',
+			title: 'Nike - Facebook',
 			description:
-				'We will continue to stand up for equality and work to break down barriers for athletes* all over the world. We will do and invest more to uphold ...',
+				"2014 design. Modern day technology. You're welcome. The Kobe 9 Elite High Protro is available 8.23 on SNKRS in select regions. The Low makes its return on 9.19.",
+			timestamp: null,
 		},
 		{
-			position: 6,
-			url: 'https://www.footlocker.com/category/brands/nike.html',
-			title: 'Nike Sneakers, Apparel, and Accessories - Foot Locker',
+			url: 'https://www.tiktok.com/@nike',
+			title: 'Nike - TikTok',
 			description:
-				'Shop the latest selection of Nike at Foot Locker. Find the hottest sneaker drops from brands like Jordan, Nike, Under Armour, ...',
+				'Nike (@nike) on TikTok | 41.6M Likes. 8.3M Followers. Just Do It.Watch Nike\'s popular videos: "You reap what you sc...", "Bienvenidos al lado ...".',
+			timestamp: null,
 		},
 		{
-			position: 7,
-			url: 'https://stockx.com/nike',
-			title: 'Buy Nike Shoes & New Sneakers - StockX',
+			url: 'https://www.footlocker.com/category/brands/nike.html?srsltid=AfmBOorc9dsr1tNbDeSVeJxsHjq9J3Ntu7ArX0ptXxHarE6Z-AkkOEOa',
+			title: 'Nike Shoes, Apparel, and Accessories - Foot Locker',
 			description:
-				'Buy and sell Nike shoes at the best price on StockX, the live marketplace for StockX Verified Nike sneakers and other popular new releases.',
+				'Shop the latest selection of Nike at Foot Locker. Find the hottest sneaker drops from brands like Jordan, Nike, Under Armour, New Balance, ...',
+			timestamp: null,
 		},
 		{
-			position: 8,
-			url: 'https://play.google.com/store/apps/details?id=com.nike.omega&hl=en_US&gl=US',
-			title: 'Nike: Shoes, Apparel & Stories - Apps on Google Play',
-			description:
-				'Shop all perfect gifts for sport and style this Nike holiday season. Nike Member Exclusive products, end of year deals, and more - shop and ...',
-		},
-		{
-			position: 9,
-			url: 'https://de-de.facebook.com/nike/',
-			title: 'Nike - Home | Facebook',
-			description:
-				'Nike, Beaverton, OR. 36093752 likes · 306235 talking about this · 7259 were here. Just Do It.',
-		},
-		{
-			position: 10,
 			url: 'https://www.linkedin.com/company/nike',
 			title: 'Nike - LinkedIn',
 			description:
-				"NIKE, Inc., named for the Greek goddess of victory, is the world's leading designer, marketer, and distributor of authentic athletic footwear, apparel, ...",
+				'NIKE, Inc. is a purpose-driven organization energized by a shared commitment to move the world forward through the power of sport.',
+			timestamp: 1726556400,
+		},
+		{
+			url: 'https://www.youtube.com/nike',
+			title: 'Nike - YouTube',
+			description:
+				'Nike Running · The Best of Nike Running · Breaking4 · Comfort Zones. Nike · Playlist. Best of Nike. 15. Just Do It. Nike · Playlist · 25 · So Win. Nike · ...',
+			timestamp: null,
+		},
+		{
+			url: 'https://www.nikegrind.com/about/',
+			title: 'About Nike Grind',
+			description:
+				'A global sustainability program that helps transform manufacturing scrap and end-of-life shoes into recycled Nike Grind materials.',
+			timestamp: null,
+		},
+		{
+			url: 'https://www.nikevision.com/',
+			title: 'Nike Vision: Sports Sunglasses & Athletic Eyewear',
+			description:
+				'Shop sports sunglasses & athletic eyewear by Nike Vision. Our advanced frames & lenses are trusted by world-class athletes for performance & durability.',
+			timestamp: null,
 		},
 	],
 	related_keywords: {
@@ -172,63 +90,78 @@ const sampleResponse = {
 		keywords: [
 			{
 				position: 1,
-				knowledge: null,
+				knowledge: {
+					title: 'Nike',
+					label: '',
+					image:
+						'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaNqA5M4DIWkVZQ1raARt6N77-pT2RXdIhKr6L2llEOQ&s=10',
+				},
 				keyword_html: 'nike',
 				keyword: 'nike',
 			},
 			{
 				position: 2,
 				knowledge: null,
-				keyword_html: 'nike<b> air force 1</b>',
-				keyword: 'nike air force 1',
+				keyword_html: 'nike<b> tech</b>',
+				keyword: 'nike tech',
 			},
 			{
 				position: 3,
 				knowledge: null,
-				keyword_html: 'nike<b> schuhe</b>',
-				keyword: 'nike schuhe',
+				keyword_html: 'nike<b> shoes</b>',
+				keyword: 'nike shoes',
 			},
 			{
 				position: 4,
 				knowledge: null,
-				keyword_html: 'nike<b> air force</b>',
-				keyword: 'nike air force',
+				keyword_html: 'nike<b> mind 001</b>',
+				keyword: 'nike mind 001',
 			},
 			{
 				position: 5,
-				knowledge: null,
-				keyword_html: 'nike<b> dunk low</b>',
-				keyword: 'nike dunk low',
+				knowledge: {
+					title: 'Nike Factory Store',
+					label: '',
+					image:
+						'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHA-BXDHZYzvrQanalN6blMXSWmkxJyBjAV8Yp9MsKC7LgoqjDT5CuEYmZ0Wk&s=10',
+				},
+				keyword_html: 'nike outlet',
+				keyword: 'nike outlet',
 			},
 			{
 				position: 6,
 				knowledge: null,
-				keyword_html: 'nike<b> air max</b>',
-				keyword: 'nike air max',
+				keyword_html: 'nike<b> vomero 5</b>',
+				keyword: 'nike vomero 5',
 			},
 			{
 				position: 7,
-				knowledge: null,
-				keyword_html: 'nike<b> jordan</b>',
-				keyword: 'nike jordan',
+				knowledge: {
+					title: 'Nike Air Max',
+					label: 'Shoes',
+					image:
+						'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREQo-KEWVVl1sjdsdORU1QKQy0ZiCqcBgdcuwAsxhkBg&s=10',
+				},
+				keyword_html: 'nike air max',
+				keyword: 'nike air max',
 			},
 			{
 				position: 8,
 				knowledge: null,
-				keyword_html: 'nike<b> tech fleece</b>',
-				keyword: 'nike tech fleece',
+				keyword_html: 'nike<b> air jordan x</b>',
+				keyword: 'nike air jordan x',
 			},
 			{
 				position: 9,
 				knowledge: null,
-				keyword_html: 'nike<b> phantom gx</b>',
-				keyword: 'nike phantom gx',
+				keyword_html: 'nike<b> vomero</b>',
+				keyword: 'nike vomero',
 			},
 			{
 				position: 10,
 				knowledge: null,
-				keyword_html: 'nike<b> dunk</b>',
-				keyword: 'nike dunk',
+				keyword_html: 'nike<b> slides</b>',
+				keyword: 'nike slides',
 			},
 		],
 	},
@@ -237,12 +170,12 @@ const sampleResponse = {
 export async function loader({ request }: Route.LoaderArgs) {
 	const url = new URL(request.url);
 	const query = url.searchParams.get('q');
-	const { results } = sampleResponse;
-	return { results };
+	const { results, related_keywords } = sampleResponse;
+	return { results, relatedKeywords: related_keywords.keywords.slice(0, 6) };
 }
 
 export default function Search() {
-	const { results } = useLoaderData<typeof loader>();
+	const { results, relatedKeywords } = useLoaderData<typeof loader>();
 	const [searchParams] = useSearchParams();
 	const query = searchParams.get('q');
 
@@ -285,14 +218,14 @@ export default function Search() {
 					</Field>
 				</Form>
 			</header>
-			<main className="p-4">
+			<main className="p-4 space-y-4">
 				{results.length === 0 ? (
 					<p className="text-center text-muted-foreground">No results found for "{query}"</p>
 				) : (
 					<>
-						<ul className="flex flex-col gap-4">
+						<ul className="space-y-4">
 							{results.map((result) => (
-								<li key={result.position}>
+								<li key={result.url}>
 									<Card className="shadow gap-3">
 										<Link
 											to={result.url}
@@ -318,11 +251,28 @@ export default function Search() {
 								</li>
 							))}
 						</ul>
-						<Button
-							variant="outline"
-							size="lg"
-							className="w-full mt-4 h-10 dark:bg-secondary shadow"
-						>
+						<Card className="shadow">
+							<CardHeader>
+								<CardTitle className="text-lg font-medium">People also search for</CardTitle>
+							</CardHeader>
+							<CardContent>
+								<ul>
+									{relatedKeywords.map((keyword, index) => (
+										<li key={keyword.position}>
+											<Link
+												to={`/search?q=${encodeURIComponent(keyword.keyword)}`}
+												className="py-3 block text-base"
+											>
+												{keyword.keyword}
+											</Link>
+											{index !== relatedKeywords.length - 1 && <Separator />}
+										</li>
+									))}
+								</ul>
+							</CardContent>
+						</Card>
+
+						<Button variant="outline" size="lg" className="w-full h-10 dark:bg-secondary shadow">
 							<ArrowDown /> More search results
 						</Button>
 					</>

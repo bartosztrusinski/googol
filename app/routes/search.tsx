@@ -1,183 +1,253 @@
 import { ArrowDown, SearchIcon } from 'lucide-react';
+import { useState, useTransition } from 'react';
 import { Form, Link, useLoaderData, useSearchParams } from 'react-router';
 import { ModeToggle } from '~/components/mode-toggle';
 import { Button } from '~/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '~/components/ui/card';
 import { Field, FieldLabel } from '~/components/ui/field';
 import { Input } from '~/components/ui/input';
-import { Separator } from '~/components/ui/separator';
 import type { Route } from './+types/search';
 
 const sampleResponse = {
-	search_term: 'Nike',
-	next_cursor: 'CAo=',
-	knowledge_panel: null,
-	results: [
+	searchParameters: {
+		q: 'nike',
+		gl: 'us',
+		hl: 'en',
+		type: 'search',
+		num: 10,
+		autocorrect: true,
+		page: 1,
+		engine: 'google',
+	},
+	knowledgeGraph: {
+		title: 'Nike',
+		imageUrl:
+			'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJYNPrmuNiWEWzv0FHSGFzW9jEd_h_oB4&s=0',
+		description:
+			"Nike, Inc. is an American athletic footwear and apparel corporation headquartered near Beaverton, Oregon. It is the world's largest supplier of athletic shoes and apparel and a major manufacturer of sports equipment, with revenue in excess of...",
+		descriptionSource: 'Wikipedia',
+		descriptionLink: 'https://en.wikipedia.org/wiki/Nike,_Inc.',
+		attributes: {
+			'Customer service': '1 (800) 806-6453',
+			CFO: 'Matthew Friend',
+			CMO: 'Dirk Jan van Hameren',
+			COO: 'Andrew Campion',
+			President: 'Elliott Hill',
+			Founders: 'Phil Knight and Bill Bowerman',
+			Founded: 'January 25, 1964, Eugene, OR',
+			Owner: 'Phil Knight',
+		},
+	},
+	organic: [
 		{
-			url: 'https://www.nike.com/',
 			title: 'Nike. Just Do It. Nike.com',
-			description:
+			link: 'https://www.nike.com/',
+			snippet:
 				"Inspiring the world's athletes, Nike delivers innovative products, experiences and services.",
-			timestamp: null,
+			sitelinks: [
+				{
+					title: 'Men',
+					link: 'https://www.nike.com/men',
+				},
+				{
+					title: 'Women',
+					link: 'https://www.nike.com/women',
+				},
+				{
+					title: 'Kids',
+					link: 'https://www.nike.com/kids',
+				},
+				{
+					title: 'Shop All Sale',
+					link: 'https://www.nike.com/w/sale-3yaep',
+				},
+				{
+					title: "Men's Shoes & Sneakers",
+					link: 'https://www.nike.com/w/mens-shoes-nik1zy7ok',
+				},
+			],
+			position: 1,
 		},
 		{
-			url: 'https://www.instagram.com/nike/',
-			title: 'Nike (@nike) · Beaverton, OR - Instagram',
-			description:
-				'Introducing Nike Project Amplify,. Fast forward your stride—and the future of movement.',
-			timestamp: null,
-		},
-		{
-			url: 'https://en.wikipedia.org/wiki/Nike,_Inc.',
-			title: 'Nike, Inc. - Wikipedia',
-			description:
-				"It is the world's largest supplier of athletic shoes and apparel and a major manufacturer of sports equipment, with revenue in excess of US$46 billion in its ...",
-			timestamp: null,
-		},
-		{
-			url: 'https://www.facebook.com/nike/',
-			title: 'Nike - Facebook',
-			description:
-				"2014 design. Modern day technology. You're welcome. The Kobe 9 Elite High Protro is available 8.23 on SNKRS in select regions. The Low makes its return on 9.19.",
-			timestamp: null,
-		},
-		{
-			url: 'https://www.tiktok.com/@nike',
-			title: 'Nike - TikTok',
-			description:
-				'Nike (@nike) on TikTok | 41.6M Likes. 8.3M Followers. Just Do It.Watch Nike\'s popular videos: "You reap what you sc...", "Bienvenidos al lado ...".',
-			timestamp: null,
-		},
-		{
-			url: 'https://www.footlocker.com/category/brands/nike.html?srsltid=AfmBOorc9dsr1tNbDeSVeJxsHjq9J3Ntu7ArX0ptXxHarE6Z-AkkOEOa',
 			title: 'Nike Shoes, Apparel, and Accessories - Foot Locker',
-			description:
+			link: 'https://www.footlocker.com/category/brands/nike.html?srsltid=AfmBOopRCzKE3z9prm0ZBWpvpyYucEgPmFX5B8yw6Sco3J0GU0ugv3TW',
+			snippet:
 				'Shop the latest selection of Nike at Foot Locker. Find the hottest sneaker drops from brands like Jordan, Nike, Under Armour, New Balance, ...',
-			timestamp: null,
+			position: 2,
 		},
 		{
-			url: 'https://www.linkedin.com/company/nike',
-			title: 'Nike - LinkedIn',
-			description:
-				'NIKE, Inc. is a purpose-driven organization energized by a shared commitment to move the world forward through the power of sport.',
-			timestamp: 1726556400,
+			title: 'Nike - Amazon.com',
+			link: 'https://www.amazon.com/stores/Nike/page/E9C7C6A6-9A88-4959-A67F-4D44FC67320F',
+			snippet:
+				'Collection: Move Easy. Feel Great. Collection: Strength Starts Here · Shoes · Clothing · Swim · Accessories · Shop by Color: Dark Neutrals · Shop by Color: ...',
+			position: 3,
 		},
 		{
-			url: 'https://www.youtube.com/nike',
+			title: 'r/Nike - Reddit',
+			link: 'https://www.reddit.com/r/Nike/',
+			snippet:
+				'r/Nike: A community to post, appreciate, and discuss Nike. Please be respectful. Just do it.',
+			position: 4,
+		},
+		{
+			title: 'Nike (@nike) · Beaverton, OR - Instagram',
+			link: 'https://www.instagram.com/nike/',
+			snippet:
+				'Introducing Nike Project Amplify,. Fast forward your stride—and the future of movement.',
+			position: 5,
+		},
+		{
+			title: 'Nike, Inc. - Wikipedia',
+			link: 'https://en.wikipedia.org/wiki/Nike,_Inc.',
+			snippet:
+				"It is the world's largest supplier of athletic shoes and apparel and a major manufacturer of sports equipment, with revenue in excess of US$46 billion in its ...",
+			position: 6,
+		},
+		{
 			title: 'Nike - YouTube',
-			description:
-				'Nike Running · The Best of Nike Running · Breaking4 · Comfort Zones. Nike · Playlist. Best of Nike. 15. Just Do It. Nike · Playlist · 25 · So Win. Nike · ...',
-			timestamp: null,
-		},
-		{
-			url: 'https://www.nikegrind.com/about/',
-			title: 'About Nike Grind',
-			description:
-				'A global sustainability program that helps transform manufacturing scrap and end-of-life shoes into recycled Nike Grind materials.',
-			timestamp: null,
-		},
-		{
-			url: 'https://www.nikevision.com/',
-			title: 'Nike Vision: Sports Sunglasses & Athletic Eyewear',
-			description:
-				'Shop sports sunglasses & athletic eyewear by Nike Vision. Our advanced frames & lenses are trusted by world-class athletes for performance & durability.',
-			timestamp: null,
+			link: 'https://www.youtube.com/nike',
+			snippet:
+				'Nike Running · The Best of Nike Running · Breaking4 · Comfort Zones. Nike · Playlist. Best of Nike. 15 · Just Do It. Nike · Playlist · 25. So Win. Nike · ...',
+			position: 7,
 		},
 	],
-	related_keywords: {
-		spelling_suggestion_html: null,
-		spelling_suggestion: null,
-		keywords: [
-			{
-				position: 1,
-				knowledge: {
-					title: 'Nike',
-					label: '',
-					image:
-						'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaNqA5M4DIWkVZQ1raARt6N77-pT2RXdIhKr6L2llEOQ&s=10',
-				},
-				keyword_html: 'nike',
-				keyword: 'nike',
-			},
-			{
-				position: 2,
-				knowledge: null,
-				keyword_html: 'nike<b> tech</b>',
-				keyword: 'nike tech',
-			},
-			{
-				position: 3,
-				knowledge: null,
-				keyword_html: 'nike<b> shoes</b>',
-				keyword: 'nike shoes',
-			},
-			{
-				position: 4,
-				knowledge: null,
-				keyword_html: 'nike<b> mind 001</b>',
-				keyword: 'nike mind 001',
-			},
-			{
-				position: 5,
-				knowledge: {
-					title: 'Nike Factory Store',
-					label: '',
-					image:
-						'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHA-BXDHZYzvrQanalN6blMXSWmkxJyBjAV8Yp9MsKC7LgoqjDT5CuEYmZ0Wk&s=10',
-				},
-				keyword_html: 'nike outlet',
-				keyword: 'nike outlet',
-			},
-			{
-				position: 6,
-				knowledge: null,
-				keyword_html: 'nike<b> vomero 5</b>',
-				keyword: 'nike vomero 5',
-			},
-			{
-				position: 7,
-				knowledge: {
-					title: 'Nike Air Max',
-					label: 'Shoes',
-					image:
-						'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREQo-KEWVVl1sjdsdORU1QKQy0ZiCqcBgdcuwAsxhkBg&s=10',
-				},
-				keyword_html: 'nike air max',
-				keyword: 'nike air max',
-			},
-			{
-				position: 8,
-				knowledge: null,
-				keyword_html: 'nike<b> air jordan x</b>',
-				keyword: 'nike air jordan x',
-			},
-			{
-				position: 9,
-				knowledge: null,
-				keyword_html: 'nike<b> vomero</b>',
-				keyword: 'nike vomero',
-			},
-			{
-				position: 10,
-				knowledge: null,
-				keyword_html: 'nike<b> slides</b>',
-				keyword: 'nike slides',
-			},
-		],
+	relatedSearches: [
+		{
+			query: 'Nike France',
+		},
+		{
+			query: 'Nike shoes',
+		},
+		{
+			query: 'Nike Us',
+		},
+		{
+			query: 'Nike company',
+		},
+		{
+			query: 'Nike uk',
+		},
+		{
+			query: 'Nike logo',
+		},
+		{
+			query: 'Nike USA Sale',
+		},
+		{
+			query: 'Nike China',
+		},
+	],
+	credits: 1,
+};
+
+const nextPageResponse = {
+	searchParameters: {
+		q: 'nike',
+		gl: 'us',
+		hl: 'en',
+		type: 'search',
+		num: 10,
+		autocorrect: true,
+		page: 2,
+		engine: 'google',
 	},
+	organic: [
+		{
+			title: 'Nike - Amazon.com',
+			link: 'https://www.amazon.com/stores/Nike/page/E9C7C6A6-9A88-4959-A67F-4D44FC67320F',
+			snippet:
+				'Collection: Move Easy. Feel Great. Collection: Strength Starts Here · Shoes · Clothing · Swim · Accessories · Shop by Color: Dark Neutrals · Shop by Color: ...',
+			position: 1,
+		},
+		{
+			title: 'Can Nike Stage Another Comeback? - YouTube',
+			link: 'https://www.youtube.com/watch?v=T4MRIaMz2ks',
+			snippet:
+				"Nike's turnaround effort is facing challenges due to inventory clearance and the impact of the growing trade war.",
+			date: 'Mar 21, 2025',
+			position: 2,
+		},
+		{
+			title: 'Shop Nike Online | Nordstrom',
+			link: 'https://www.nordstrom.com/brands/nike--535?srsltid=AfmBOopPxIVTxHlTPHFv4EP4P9eOfgN6FdLw0_ONQq8Gf_IfT1WVsD5m',
+			snippet: 'Free shipping and returns on Nike at Nordstrom.com. Top brands. New trends.',
+			position: 3,
+		},
+		{
+			title: "Shop Nike Clothing, Shoes & Socks - Kohl's",
+			link: 'https://www.kohls.com/catalog/nike.jsp?CN=Brand:Nike',
+			snippet:
+				"At Kohl's you can find plenty of Nike clothing options for any occasion. Start your outfit off right with a stylish Nike top. No matter if it's a graphic tee or ...",
+			position: 4,
+		},
+		{
+			title: 'Nike Shoes | Free Shipping for Rewards Members - Famous Footwear',
+			link: 'https://www.famousfootwear.com/browse/brands/nike',
+			snippet:
+				'Shop Nike Shoes at Famous Footwear. Explore the latest Nike shoes, sneakers & slides for women, men & kids.',
+			position: 5,
+		},
+		{
+			title: 'Nike stock sees worst day on record, prompting CEO criticism',
+			link: 'https://www.youtube.com/watch?v=B9fv_szgLNk',
+			snippet:
+				'Nike on Friday saw its stock prices plummet 20% after the company warned its current quarter sales would see a steep decline.',
+			date: 'Jul 2, 2024',
+			position: 6,
+		},
+		{
+			title: 'Shop Nike Sneakers and Apparel Online - Feature',
+			link: 'https://feature.com/collections/nike?srsltid=AfmBOoqRz6TY94a16OnF34gW1LBY4o9SCIZNJX6iIVQVuwWH0DhoEBy9',
+			snippet:
+				"Nike's latest footwear delivery has arrived. Tap to discover your new pair. Feature has the lastest 2022 Styles. Order Online & Get Fast Delivery plus ...",
+			currency: '$',
+			price: 140,
+			position: 7,
+		},
+		{
+			title: 'Nike | 6pm',
+			link: 'https://www.6pm.com/b/nike/brand/111',
+			snippet:
+				'Nike is able to outfit an athlete from the top down with high performance shoes, clothing, socks, bags, watches and eyewear.',
+			currency: '$',
+			price: 100,
+			position: 8,
+		},
+		{
+			title: "Nike - Macy's",
+			link: 'https://www.macys.com/shop/brands/nike?id=70897',
+			snippet:
+				"Discover the best of Nike Activewear at Macy's. Shop a wide range of footwear, apparel, and accessories. Free shipping available.",
+			currency: '$',
+			price: 49,
+			position: 9,
+		},
+	],
+	credits: 1,
 };
 
 export async function loader({ request }: Route.LoaderArgs) {
 	const url = new URL(request.url);
 	const query = url.searchParams.get('q');
-	const { results, related_keywords } = sampleResponse;
-	return { results, relatedKeywords: related_keywords.keywords.slice(0, 6) };
+	const { organic } = sampleResponse;
+	return { results: organic };
 }
 
 export default function Search() {
-	const { results, relatedKeywords } = useLoaderData<typeof loader>();
+	const { results } = useLoaderData<typeof loader>();
 	const [searchParams] = useSearchParams();
+	const [isPending, startTransition] = useTransition();
+	const [searchResults, setSearchResults] = useState(results);
+	const [hasMoreResults, setHasMoreResults] = useState(true);
 	const query = searchParams.get('q');
+
+	async function fetchMoreResults() {
+		startTransition(async () => {
+			await new Promise((resolve) => setTimeout(resolve, 1000));
+			setSearchResults((prevResults) => [...prevResults, ...nextPageResponse.organic]);
+			setHasMoreResults(nextPageResponse.organic.length === 10);
+		});
+	}
 
 	return (
 		<>
@@ -193,7 +263,7 @@ export default function Search() {
 						<ModeToggle />
 					</div>
 				</div>
-				<Form action="/search">
+				<Form action="/search" method="GET">
 					<Field orientation="horizontal" className="items-stretch gap-1.5">
 						<FieldLabel htmlFor="search" className="sr-only">
 							Search
@@ -219,16 +289,16 @@ export default function Search() {
 				</Form>
 			</header>
 			<main className="p-4 space-y-4">
-				{results.length === 0 ? (
+				{searchResults.length === 0 ? (
 					<p className="text-center text-muted-foreground">No results found for "{query}"</p>
 				) : (
 					<>
 						<ul className="space-y-4">
-							{results.map((result) => (
-								<li key={result.url}>
+							{searchResults.map((result) => (
+								<li key={result.link}>
 									<Card className="shadow gap-3">
 										<Link
-											to={result.url}
+											to={result.link}
 											target="_blank"
 											rel="noopener noreferrer"
 											className="group"
@@ -240,41 +310,28 @@ export default function Search() {
 													</h2>
 												</CardTitle>
 												<CardDescription className="text-xs row-start-1">
-													{new URL(result.url).origin}
+													{new URL(result.link).origin}
 												</CardDescription>
 											</CardHeader>
 										</Link>
 										<CardContent>
-											<p className="text-pretty text-muted-foreground">{result.description}</p>
+											<p className="text-pretty text-muted-foreground">{result.snippet}</p>
 										</CardContent>
 									</Card>
 								</li>
 							))}
 						</ul>
-						<Card className="shadow">
-							<CardHeader>
-								<CardTitle className="text-lg font-medium">People also search for</CardTitle>
-							</CardHeader>
-							<CardContent>
-								<ul>
-									{relatedKeywords.map((keyword, index) => (
-										<li key={keyword.position}>
-											<Link
-												to={`/search?q=${encodeURIComponent(keyword.keyword)}`}
-												className="py-3 block text-base"
-											>
-												{keyword.keyword}
-											</Link>
-											{index !== relatedKeywords.length - 1 && <Separator />}
-										</li>
-									))}
-								</ul>
-							</CardContent>
-						</Card>
-
-						<Button variant="outline" size="lg" className="w-full h-10 dark:bg-secondary shadow">
-							<ArrowDown /> More search results
-						</Button>
+						{hasMoreResults && (
+							<Button
+								variant="outline"
+								size="lg"
+								className="w-full h-10 dark:bg-secondary shadow disabled:pointer-events-none disabled:opacity-50"
+								disabled={isPending}
+								onClick={fetchMoreResults}
+							>
+								<ArrowDown /> More search results
+							</Button>
+						)}
 					</>
 				)}
 			</main>

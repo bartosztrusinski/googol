@@ -153,11 +153,26 @@ const nextPageResponse = {
 	},
 	organic: [
 		{
-			title: 'Nike - Amazon.com',
-			link: 'https://www.amazon.com/stores/Nike/page/E9C7C6A6-9A88-4959-A67F-4D44FC67320F',
-			snippet:
-				'Collection: Move Easy. Feel Great. Collection: Strength Starts Here · Shoes · Clothing · Swim · Accessories · Shop by Color: Dark Neutrals · Shop by Color: ...',
+			title: 'Shop Nike Online | Nordstrom',
+			link: 'https://www.nordstrom.com/brands/nike--535?srsltid=AfmBOopK91dj2jCI4bJ9lJBZhVCswPZhSWQUrO-lTkH7hcY8NEpRjut8',
+			snippet: 'Free shipping and returns on Nike at Nordstrom.com. Top brands. New trends.',
 			position: 1,
+		},
+		{
+			title: "Shop Nike Clothing, Shoes & Socks - Kohl's",
+			link: 'https://www.kohls.com/catalog/nike.jsp?CN=Brand:Nike',
+			snippet:
+				"At Kohl's you can find plenty of Nike clothing options for any occasion. Start your outfit off right with a stylish Nike top. No matter if it's a graphic tee or ...",
+			currency: '$',
+			price: 49,
+			position: 2,
+		},
+		{
+			title: 'Nike Shoes | Free Shipping for Rewards Members - Famous Footwear',
+			link: 'https://www.famousfootwear.com/browse/brands/nike',
+			snippet:
+				'Shop Nike Shoes at Famous Footwear. Explore the latest Nike shoes, sneakers & slides for women, men & kids.',
+			position: 3,
 		},
 		{
 			title: 'Can Nike Stage Another Comeback? - YouTube',
@@ -165,44 +180,16 @@ const nextPageResponse = {
 			snippet:
 				"Nike's turnaround effort is facing challenges due to inventory clearance and the impact of the growing trade war.",
 			date: 'Mar 21, 2025',
-			position: 2,
-		},
-		{
-			title: 'Shop Nike Online | Nordstrom',
-			link: 'https://www.nordstrom.com/brands/nike--535?srsltid=AfmBOopPxIVTxHlTPHFv4EP4P9eOfgN6FdLw0_ONQq8Gf_IfT1WVsD5m',
-			snippet: 'Free shipping and returns on Nike at Nordstrom.com. Top brands. New trends.',
-			position: 3,
-		},
-		{
-			title: "Shop Nike Clothing, Shoes & Socks - Kohl's",
-			link: 'https://www.kohls.com/catalog/nike.jsp?CN=Brand:Nike',
-			snippet:
-				"At Kohl's you can find plenty of Nike clothing options for any occasion. Start your outfit off right with a stylish Nike top. No matter if it's a graphic tee or ...",
 			position: 4,
 		},
 		{
-			title: 'Nike Shoes | Free Shipping for Rewards Members - Famous Footwear',
-			link: 'https://www.famousfootwear.com/browse/brands/nike',
-			snippet:
-				'Shop Nike Shoes at Famous Footwear. Explore the latest Nike shoes, sneakers & slides for women, men & kids.',
-			position: 5,
-		},
-		{
-			title: 'Nike stock sees worst day on record, prompting CEO criticism',
-			link: 'https://www.youtube.com/watch?v=B9fv_szgLNk',
-			snippet:
-				'Nike on Friday saw its stock prices plummet 20% after the company warned its current quarter sales would see a steep decline.',
-			date: 'Jul 2, 2024',
-			position: 6,
-		},
-		{
 			title: 'Shop Nike Sneakers and Apparel Online - Feature',
-			link: 'https://feature.com/collections/nike?srsltid=AfmBOoqRz6TY94a16OnF34gW1LBY4o9SCIZNJX6iIVQVuwWH0DhoEBy9',
+			link: 'https://feature.com/collections/nike?srsltid=AfmBOoqGALUmjj4XU-Pw-578EED2IzW9fqRtgKRkW8vnPZEKd99NMRFN',
 			snippet:
 				"Nike's latest footwear delivery has arrived. Tap to discover your new pair. Feature has the lastest 2022 Styles. Order Online & Get Fast Delivery plus ...",
 			currency: '$',
 			price: 140,
-			position: 7,
+			position: 5,
 		},
 		{
 			title: 'Nike | 6pm',
@@ -211,7 +198,7 @@ const nextPageResponse = {
 				'Nike is able to outfit an athlete from the top down with high performance shoes, clothing, socks, bags, watches and eyewear.',
 			currency: '$',
 			price: 100,
-			position: 8,
+			position: 6,
 		},
 		{
 			title: "Nike - Macy's",
@@ -220,7 +207,29 @@ const nextPageResponse = {
 				"Discover the best of Nike Activewear at Macy's. Shop a wide range of footwear, apparel, and accessories. Free shipping available.",
 			currency: '$',
 			price: 49,
+			position: 7,
+		},
+		{
+			title: 'Drove Soooo Far For This Nike Outlet... - YouTube',
+			link: 'https://www.youtube.com/watch?v=HmAAQfXJnC0',
+			snippet:
+				'We had to head out to Bakersfield... so you know what that means! We had to check out the Nike Factory Store at the Tejon Ranch Outlets.',
+			date: 'Oct 21, 2025',
+			position: 8,
+		},
+		{
+			title: "Nike | DICK'S Sporting Goods",
+			link: 'https://www.dickssportinggoods.com/s/brand-shop/nike?srsltid=AfmBOoo-vYo46G-AI9yOFz5hwrxo3B574g74ZSTdFmXgdnG-sBv7lTuY',
+			snippet:
+				'Our collection of Nike shoes includes shoes optimized for running, training, basketball and more. Shop sport-specific Nike cleats and shoes, including Nike ...',
 			position: 9,
+		},
+		{
+			title: 'Nike Shoes & Clothing - JD Sports',
+			link: 'https://www.jdsports.com/plp/nike',
+			snippet:
+				'Shop the latest Nike shoes and sportswear at JD Sports. From iconic Air Max to cutting-edge running tech, find your perfect fit and level up your style.',
+			position: 10,
 		},
 	],
 	credits: 1,

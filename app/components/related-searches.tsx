@@ -3,13 +3,10 @@ import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card';
 import { Separator } from '~/components/ui/separator';
 
 type Props = {
-	keywords: {
-		position: number;
-		keyword: string;
-	}[];
+	searches: string[];
 };
 
-export function SearchRelatedKeywords({ keywords }: Props) {
+export function RelatedSearches({ searches: keywords }: Props) {
 	return (
 		<Card className="shadow">
 			<CardHeader>
@@ -20,12 +17,15 @@ export function SearchRelatedKeywords({ keywords }: Props) {
 					{keywords.map((keyword, index) => {
 						const isLastKeyword = index === keywords.length - 1;
 						return (
-							<li key={keyword.position}>
+							<li key={keyword}>
 								<Link
-									to={`/search?q=${encodeURIComponent(keyword.keyword)}`}
+									to={{
+										pathname: '/search',
+										search: `?q=${encodeURIComponent(keyword)}`,
+									}}
 									className="py-3 block text-base"
 								>
-									{keyword.keyword}
+									{keyword}
 								</Link>
 								{!isLastKeyword && <Separator />}
 							</li>

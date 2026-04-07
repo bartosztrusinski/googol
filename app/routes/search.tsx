@@ -11,7 +11,7 @@ import type { Route } from './+types/search';
 
 export async function loader({ request }: Route.LoaderArgs) {
 	const url = new URL(request.url);
-	const query = url.searchParams.get('q');
+	const query = url.searchParams.get('q')?.replace(/\s+/g, ' ').trim();
 
 	if (!query) {
 		return redirect('/');

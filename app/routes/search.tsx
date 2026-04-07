@@ -1,4 +1,5 @@
 import { SearchIcon } from 'lucide-react';
+import { useRef } from 'react';
 import { Form, Link, redirect, useLoaderData, useNavigation } from 'react-router';
 import { ModeToggle } from '~/components/mode-toggle';
 import { SearchResults } from '~/components/search-results';
@@ -29,6 +30,14 @@ export default function Search() {
 	const { results, relatedSearches, query, page } = useLoaderData<typeof loader>();
 	const navigation = useNavigation();
 	const isSearching = navigation.formAction === '/search' && navigation.formMethod === 'GET';
+	const inputRef = useRef<HTMLInputElement>(null);
+
+	function trimQueryInput() {
+		const input = inputRef.current;
+		if (input) {
+			input.value = input.value.replace(/\s+/g, ' ').trim();
+		}
+	}
 
 	return (
 		<>
@@ -44,12 +53,13 @@ export default function Search() {
 						<ModeToggle />
 					</div>
 				</div>
-				<Form action="/search" method="GET">
+				<Form action="/search" method="GET" onSubmit={trimQueryInput}>
 					<Field orientation="horizontal" className="items-stretch gap-1.5">
 						<FieldLabel htmlFor="search" className="sr-only">
 							Search
 						</FieldLabel>
 						<Input
+							ref={inputRef}
 							id="search"
 							type="search"
 							name="q"
@@ -60,7 +70,7 @@ export default function Search() {
 							autoCorrect="off"
 							spellCheck={false}
 							className="h-auto rounded-2xl px-4 shadow-md dark:bg-secondary"
-							defaultValue={query ?? undefined}
+							defaultValue={query}
 							disabled={isSearching}
 							required
 						/>

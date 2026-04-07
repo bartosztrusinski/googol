@@ -8,24 +8,25 @@ import { fetchSearchResults } from '~/lib/fetch-search-results';
 import type { SearchResult } from '~/lib/sample-data';
 
 type Props = {
-	results: SearchResult['organic'];
+	initialResults: SearchResult['organic'];
 	relatedSearches?: SearchResult['relatedSearches'];
-	page: number;
+	initialPage: number;
 	query: string;
 };
 
-export function SearchResults({ results, relatedSearches, page, query }: Props) {
+export function SearchResults({ initialResults, relatedSearches, initialPage, query }: Props) {
 	const [isPending, startTransition] = useTransition();
-	const [searchResults, setSearchResults] = useState(results);
-	const [hasMoreResults, setHasMoreResults] = useState(results.length > 0);
-	const [currentPage, setCurrentPage] = useState(page);
+	const [moreResults, setMoreResults] = useState<SearchResult['organic']>([]);
+	const [hasMoreResults, setHasMoreResults] = useState(initialResults.length > 0);
+	const [page, setPage] = useState(initialPage);
+	const searchResults = [...initialResults, ...moreResults];
 
 	async function fetchMoreResults() {
 		startTransition(async () => {
-			const { organic, searchParameters } = await fetchSearchResults(query, currentPage + 1, false);
-			setSearchResults((prevResults) => [...prevResults, ...organic]);
+			const { organic, searchParameters } = await fetchSearchResults(query, page + 1, false);
+			setMoreResults((prevResults) => [...prevResults, ...organic]);
 			setHasMoreResults(organic.length > 0);
-			setCurrentPage(searchParameters.page);
+			setPage(searchParameters.page);
 		});
 	}
 

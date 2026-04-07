@@ -30,6 +30,7 @@ export default function Search() {
 	const { results, relatedSearches, query, page } = useLoaderData<typeof loader>();
 	const navigation = useNavigation();
 	const isSearching = navigation.formAction === '/search' && navigation.formMethod === 'GET';
+	const isNavigating = Boolean(navigation.location);
 	const inputRef = useRef<HTMLInputElement>(null);
 
 	function trimQueryInput() {
@@ -78,7 +79,7 @@ export default function Search() {
 							type="submit"
 							size="icon-lg"
 							className="size-11 rounded-2xl"
-							disabled={isSearching}
+							disabled={isSearching || isNavigating}
 						>
 							<SearchIcon />
 							<span className="sr-only">Search</span>
@@ -93,9 +94,10 @@ export default function Search() {
 					<p className="text-center text-muted-foreground">No results found for "{query}"</p>
 				) : (
 					<SearchResults
-						results={results}
+						key={query}
+						initialResults={results}
 						relatedSearches={relatedSearches}
-						page={page}
+						initialPage={page}
 						query={query}
 					/>
 				)}

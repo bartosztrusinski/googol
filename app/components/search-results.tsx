@@ -10,15 +10,14 @@ import type { SearchResult } from '~/lib/sample-data';
 type Props = {
 	initialResults: SearchResult['organic'];
 	relatedSearches?: SearchResult['relatedSearches'];
-	initialPage: number;
 	query: string;
 };
 
-export function SearchResults({ initialResults, relatedSearches, initialPage, query }: Props) {
+export function SearchResults({ initialResults, relatedSearches, query }: Props) {
 	const [isPending, startTransition] = useTransition();
 	const [moreResults, setMoreResults] = useState<SearchResult['organic']>([]);
 	const [hasMoreResults, setHasMoreResults] = useState(initialResults.length > 0);
-	const [page, setPage] = useState(initialPage);
+	const [page, setPage] = useState(1);
 	const searchResults = [...initialResults, ...moreResults];
 
 	async function fetchMoreResults() {

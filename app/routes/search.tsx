@@ -17,17 +17,16 @@ export async function loader({ request }: Route.LoaderArgs) {
 		return redirect('/');
 	}
 
-	const { organic, relatedSearches, searchParameters } = await fetchSearchResults(query, 1);
+	const { organic, relatedSearches } = await fetchSearchResults(query, 1);
 	return {
 		results: organic,
 		relatedSearches,
 		query,
-		page: searchParameters.page,
 	};
 }
 
 export default function Search({ loaderData }: Route.ComponentProps) {
-	const { results, relatedSearches, query, page } = loaderData;
+	const { results, relatedSearches, query } = loaderData;
 	const { formAction, formMethod, location } = useNavigation();
 	const [inputQuery, setInputQuery] = useState(query);
 	const isSearching = formAction === '/search' && formMethod === 'GET';
@@ -98,7 +97,6 @@ export default function Search({ loaderData }: Route.ComponentProps) {
 						key={query}
 						initialResults={results}
 						relatedSearches={relatedSearches}
-						initialPage={page}
 						query={query}
 					/>
 				)}

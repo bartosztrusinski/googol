@@ -1,6 +1,6 @@
 import { SearchIcon } from 'lucide-react';
-import { useRef } from 'react';
-import { Form, Link, redirect, useLoaderData, useNavigation } from 'react-router';
+import { useEffect, useState } from 'react';
+import { Form, Link, redirect, useNavigation } from 'react-router';
 import { ModeToggle } from '~/components/mode-toggle';
 import { SearchResults } from '~/components/search-results';
 import { Button } from '~/components/ui/button';
@@ -26,19 +26,20 @@ export async function loader({ request }: Route.LoaderArgs) {
 	};
 }
 
-export default function Search() {
-	const { results, relatedSearches, query, page } = useLoaderData<typeof loader>();
-	const navigation = useNavigation();
-	const isSearching = navigation.formAction === '/search' && navigation.formMethod === 'GET';
-	const isNavigating = Boolean(navigation.location);
-	const inputRef = useRef<HTMLInputElement>(null);
+export default function Search({ loaderData }: Route.ComponentProps) {
+	const { results, relatedSearches, query, page } = loaderData;
+	const { formAction, formMethod, location } = useNavigation();
+	const [inputQuery, setInputQuery] = useState(query);
+	const isSearching = formAction === '/search' && formMethod === 'GET';
+	const isNavigating = Boolean(location);
 
 	function trimQueryInput() {
-		const input = inputRef.current;
-		if (input) {
-			input.value = input.value.replace(/\s+/g, ' ').trim();
-		}
+		setInputQuery((prevInput) => prevInput.replace(/\s+/g, ' ').trim());
 	}
+
+	useEffect(() => {
+		setInputQuery(query);
+	}, [query]);
 
 	return (
 		<>
@@ -60,7 +61,6 @@ export default function Search() {
 							Search
 						</FieldLabel>
 						<Input
-							ref={inputRef}
 							id="search"
 							type="search"
 							name="q"
@@ -71,7 +71,8 @@ export default function Search() {
 							autoCorrect="off"
 							spellCheck={false}
 							className="h-auto rounded-2xl px-4 shadow-md dark:bg-secondary"
-							defaultValue={query}
+							value={inputQuery}
+							onChange={(event) => setInputQuery(event.target.value)}
 							disabled={isSearching}
 							required
 						/>

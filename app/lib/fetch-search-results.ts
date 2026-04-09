@@ -1,4 +1,9 @@
-import { type SearchResult, sampleData } from '~/lib/sample-data';
+import {
+	type ImageSearchResult,
+	type SearchResult,
+	sampleData,
+	sampleImages,
+} from '~/lib/sample-data';
 
 export async function fetchSearchResults(
 	query: string,
@@ -16,4 +21,12 @@ export async function fetchSearchResults(
 					relatedSearches: [],
 					searchParameters: { ...sampleData.other.searchParameters, page },
 				};
+}
+
+export async function fetchImageSearchResults(
+	query: string,
+	page: number,
+): Promise<ImageSearchResult> {
+	await new Promise((resolve) => setTimeout(resolve, 1000));
+	return sampleImages[query];
 }

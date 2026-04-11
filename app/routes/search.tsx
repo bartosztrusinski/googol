@@ -1,20 +1,35 @@
 import { SearchIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Form, Link, redirect, useNavigation } from 'react-router';
+import { ImageSearchResults } from '~/components/image-search-results';
 import { ModeToggle } from '~/components/mode-toggle';
 import { SearchResults } from '~/components/search-results';
 import { Button } from '~/components/ui/button';
 import { Field, FieldLabel } from '~/components/ui/field';
 import { Input } from '~/components/ui/input';
-import { fetchSearchResults } from '~/lib/fetch-search-results';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs';
+import { fetchImageSearchResults, fetchSearchResults } from '~/lib/fetch-search-results';
 import type { Route } from './+types/search';
+
+const searchTypes = ['all', 'images'] as const;
 
 export async function loader({ request }: Route.LoaderArgs) {
 	const url = new URL(request.url);
 	const query = url.searchParams.get('q')?.replace(/\s+/g, ' ').trim();
+	const searchType: (typeof searchTypes)[number] =
+		url.searchParams.get('type') === 'images' ? 'images' : 'all';
 
 	if (!query) {
 		return redirect('/');
+	}
+
+	if (searchType === 'images') {
+		const { images } = await fetchImageSearchResults(query, 1);
+		return {
+			results: images,
+			query,
+			searchType,
+		};
 	}
 
 	const { organic, relatedSearches } = await fetchSearchResults(query, 1);
@@ -22,11 +37,12 @@ export async function loader({ request }: Route.LoaderArgs) {
 		results: organic,
 		relatedSearches,
 		query,
+		searchType,
 	};
 }
 
 export default function Search({ loaderData }: Route.ComponentProps) {
-	const { results, relatedSearches, query } = loaderData;
+	const { results, relatedSearches, query, searchType } = loaderData;
 	const { formAction, formMethod, location } = useNavigation();
 	const [inputQuery, setInputQuery] = useState(query);
 	const isSearching = formAction === '/search' && formMethod === 'GET';
@@ -75,6 +91,7 @@ export default function Search({ loaderData }: Route.ComponentProps) {
 							disabled={isSearching}
 							required
 						/>
+						<input type="hidden" name="type" value={searchType} />
 						<Button
 							type="submit"
 							size="icon-lg"
@@ -87,19 +104,51 @@ export default function Search({ loaderData }: Route.ComponentProps) {
 					</Field>
 				</Form>
 			</header>
-			<main className="p-4 space-y-4">
-				{isSearching ? (
-					<p className="text-center text-muted-foreground">Searching...</p>
-				) : results.length === 0 ? (
-					<p className="text-center text-muted-foreground">No results found for "{query}"</p>
-				) : (
-					<SearchResults
-						key={query}
-						initialResults={results}
-						relatedSearches={relatedSearches}
-						query={query}
-					/>
-				)}
+			<main>
+				<Tabs value={searchType} className="gap-4 py-4 px-2">
+					<TabsList className="gap-1">
+						{searchTypes.map((type) => {
+							return type === searchType || isNavigating ? (
+								<TabsTrigger key={type} value={type} disabled={isNavigating}>
+									{type.charAt(0).toUpperCase() + type.slice(1)}
+								</TabsTrigger>
+							) : (
+								<TabsTrigger key={type} value={type} asChild>
+									<Link
+										to={{
+											pathname: '/search',
+											search: `?q=${encodeURIComponent(query)}&type=${type}`,
+										}}
+									>
+										{type.charAt(0).toUpperCase() + type.slice(1)}
+									</Link>
+								</TabsTrigger>
+							);
+						})}
+					</TabsList>
+					{isSearching ? (
+						<p className="text-center text-muted-foreground">Searching...</p>
+					) : results.length === 0 ? (
+						<p className="text-center text-muted-foreground">No results found for "{query}"</p>
+					) : (
+						<>
+							<TabsContent value="all" className="space-y-4">
+								<SearchResults
+									key={query}
+									query={query}
+									initialResults={searchType === 'all' ? results : []}
+									relatedSearches={searchType === 'all' ? relatedSearches : undefined}
+								/>
+							</TabsContent>
+							<TabsContent value="images" className="space-y-4">
+								<ImageSearchResults
+									query={query}
+									initialImageResults={searchType === 'images' ? results : []}
+								/>
+							</TabsContent>
+						</>
+					)}
+				</Tabs>
 			</main>
 		</>
 	);

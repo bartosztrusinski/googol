@@ -28,5 +28,18 @@ export async function fetchImageSearchResults(
 	page: number,
 ): Promise<ImageSearchResult> {
 	await new Promise((resolve) => setTimeout(resolve, 1000));
-	return sampleImages[query];
+	const { images, searchParameters } = sampleImages[query] ?? {
+		searchParameters: { query, page },
+		images: [],
+	};
+
+	return {
+		searchParameters: {
+			...searchParameters,
+			page,
+		},
+		images: images.filter(
+			(image) => image.position > (page - 1) * 10 && image.position <= page * 10,
+		),
+	};
 }

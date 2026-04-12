@@ -62,6 +62,22 @@ export type ImageSearchResult = {
 	}[];
 };
 
+export type VideoSearchResult = {
+	searchParameters: SearchParameters;
+	videos: {
+		title: string;
+		link: string;
+		snippet: string;
+		imageUrl?: string;
+		videoUrl?: string;
+		duration?: string;
+		source?: string;
+		channel?: string;
+		date?: string;
+		position: number;
+	}[];
+};
+
 export const sampleData: Record<string, SearchResult> = {
 	nike1: {
 		searchParameters: {
@@ -2201,6 +2217,402 @@ export const sampleImages: Record<string, ImageSearchResult> = {
 				googleUrl:
 					'https://www.google.com/imgres?imgurl=https%3A%2F%2Fimages.journeys.com%2Fimages%2Fproducts%2F1_784192_FS_ALT5.JPG&tbnid=2w_qu4khWvrjbM&imgrefurl=https%3A%2F%2Fwww.journeys.com%2Fproduct%2Fadidas-samba-og-athletic-shoe-core-black-cloud-white-gum-437304%3Fsrsltid%3DAfmBOorFFj32djo5qeOxAokxpe2xMKJFmSH6P2mCjE8VXNcrju-SUB-W&docid=2s7orXWF78-pKM&w=600&h=600',
 				position: 50,
+			},
+		],
+	},
+};
+
+export const sampleVideos: Record<string, VideoSearchResult> = {
+	nike1: {
+		searchParameters: {
+			q: 'nike',
+			gl: 'us',
+			hl: 'en',
+			type: 'videos',
+			num: 10,
+			autocorrect: true,
+			page: 1,
+			engine: 'google',
+		},
+		videos: [
+			{
+				title: 'Beats x Nike',
+				link: 'https://www.youtube.com/nike',
+				snippet:
+					"Behind the Design · Behind the Hyperboot: A Nike x Hyperice Innovation | Nike · The Nike A'one with A'ja Wilson and Issa Rae | Nike · AIRMAX 1000: The Next ...",
+				position: 1,
+			},
+			{
+				title: 'Nike (@nike)',
+				link: 'https://www.tiktok.com/@nike?lang=en',
+				snippet:
+					'Nike (@nike) on TikTok | 42.2M Likes. 8.4M Followers. Just Do It.Watch Nike\'s popular videos: "Fades, draws, slices...", "Bienvenidos al lado ...".',
+				position: 2,
+			},
+			{
+				title: "I Tested Nike's Top Secret Shoe",
+				link: 'https://www.youtube.com/watch?v=Psp3YarOKVw',
+				snippet:
+					"I went to Nike's Research Lab to test out four of their secret products Go to https://surfshark.com/boss or use code BOSS at checkout to get ...",
+				imageUrl:
+					'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRTAJe6EJHWFzDv7cNh5d6HNRKizs6_NNuOCN3NBBEkj50X6u-WAq-oQ&s',
+				videoUrl:
+					'https://encrypted-vtbn0.gstatic.com/video?q=tbn:ANd9GcQErnjMIMKLBFA3nRNE0YJd7mZiVyNRcIRHIA',
+				duration: '13:10',
+				source: 'YouTube',
+				channel: 'Mrwhosetheboss',
+				date: 'Oct 23, 2025',
+				position: 3,
+			},
+			{
+				title: "2026 Nike Hoop Summit | Full Men's Game Highlights | April ...",
+				link: 'https://www.reddit.com/r/NBA_Draft/comments/1sj5v8u/2026_nike_hoop_summit_full_mens_game_highlights/',
+				snippet:
+					"2026 Nike Hoop Summit | Full Men's Game Highlights | April 11, 2026. Video. Play. This was a very competitive game through and through. Sandler ...",
+				imageUrl:
+					'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4jmI4gOqh5kUSeN_KQ6XnsDJ66rFyuA-vnGaO7nxkatk-CvvF8aLzuQ&s',
+				duration: '13:49',
+				source: 'Reddit',
+				channel: 'NBA',
+				date: '16 hours ago',
+				position: 4,
+			},
+			{
+				title: 'NIKE FREE METCON 7 | Upgrade Or a Step Back?',
+				link: 'https://www.youtube.com/watch?v=5a0LsdBW8f0',
+				snippet:
+					'READ BEST GYM SHOES: https://thatfitfriend.com/best-gym-shoes/ The Nike Free Metcon 7 has been one of the most anticipated training shoes in ...',
+				imageUrl:
+					'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfkcOsv7YZXN1ZrebXHXZdywZ6NrDSez2_mgYdst0RjE88ad99sTd19Q&s',
+				videoUrl:
+					'https://encrypted-vtbn0.gstatic.com/video?q=tbn:ANd9GcS-knVWuGZrmfglc3whWvkQbyEqVycx_3IWHA',
+				duration: '14:48',
+				source: 'YouTube',
+				channel: 'That Fit Friend',
+				date: '1 day ago',
+				position: 5,
+			},
+			{
+				title: "2026 Nike Hoop Summit | Full Men's Game Highlights | April ...",
+				link: 'https://www.youtube.com/watch?v=MTzHDJi106g',
+				snippet:
+					'The 2026 Nike Hoop Summit delivered another unforgettable night of elite international basketball, as Team USA battled the World Select Team ...',
+				imageUrl:
+					'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4jmI4gOqh5kUSeN_KQ6XnsDJ66rFyuA-vnGaO7nxkatk-CvvF8aLzuQ&s',
+				duration: '13:49',
+				source: 'YouTube',
+				channel: 'NBA',
+				date: '16 hours ago',
+				position: 6,
+			},
+			{
+				title: 'The Pegasus 42 Has A Problem',
+				link: 'https://www.youtube.com/watch?v=PRHuGcq58LE',
+				snippet:
+					'... Nike running shoe for every type of buyer. Sneaker Links Shop My Favourite Nike Picks V5 RNR https://www.jdoqocy.com/click-101504036 ...',
+				imageUrl:
+					'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROLqJxYcM_Gk94uaZB03tiEEUFIkvun8sW9aEfqxkcWgLtywMLZwNkTw&s',
+				duration: '11:58',
+				source: 'YouTube',
+				channel: 'Elliot Page',
+				date: '2 days ago',
+				position: 7,
+			},
+			{
+				title: 'Nike Sabrina 4 First Look!',
+				link: 'https://www.youtube.com/watch?v=TvKR_aQy2Ws',
+				snippet:
+					"Here's a look at the newly unveiled Nike Sabrina 4! Support me and become a member!",
+				imageUrl:
+					'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8LKIQpkx9-3FcClL2W-vrn69OaWQhIG5G21sdbPsDqP0QjYeXjpB_Yw&s',
+				videoUrl:
+					'https://encrypted-vtbn0.gstatic.com/video?q=tbn:ANd9GcTns52eugYqOVzo0icO4c4ZA21OpmcErpjFHw',
+				duration: '13:24',
+				source: 'YouTube',
+				channel: 'The Sole Drop',
+				date: '20 hours ago',
+				position: 8,
+			},
+			{
+				title: "2026 Nike Hoop Summit | Full Women's Game Highlights ...",
+				link: 'https://www.youtube.com/watch?v=TdhD4FW4Lps',
+				snippet: "2026 Nike Hoop Summit | Full Women's Game Highlights | April 11, 2026.",
+				imageUrl:
+					'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQo_LoyCx787ioTCg1xaFPjWNKIrpJrGGHA-NAh-ATgyPblDyjJeElSaQ&s',
+				duration: '10:26',
+				source: 'YouTube',
+				channel: 'NBA',
+				date: '19 hours ago',
+				position: 9,
+			},
+			{
+				title: 'FINALLY! - A Nike You Can Wear All Day For Foot Pain',
+				link: 'https://www.youtube.com/watch?v=K4pTYdFL3w0',
+				snippet:
+					'Real Foot Doctor explains if the Nike Structure Plus is a good daily shoe for foot pain. Learn the secrets of performance shoe & orthotic ...',
+				imageUrl:
+					'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJ1NNQRAaQ_xHxm3oCaz4CWCSOaHbwdEX0r8t6ki-juq_zyZl6xfgplw&s',
+				duration: '15:13',
+				source: 'YouTube',
+				channel: 'Foot Doctor Zach',
+				date: '1 month ago',
+				position: 10,
+			},
+		],
+	},
+	nike2: {
+		searchParameters: {
+			q: 'nike',
+			gl: 'us',
+			hl: 'en',
+			type: 'videos',
+			num: 10,
+			autocorrect: true,
+			page: 1,
+			engine: 'google',
+		},
+		videos: [
+			{
+				title: 'Beats x Nike',
+				link: 'https://www.youtube.com/nike',
+				snippet:
+					"Behind the Design · Behind the Hyperboot: A Nike x Hyperice Innovation | Nike · The Nike A'one with A'ja Wilson and Issa Rae | Nike · AIRMAX 1000: The Next ...",
+				position: 1,
+			},
+			{
+				title: 'Nike (@nike)',
+				link: 'https://www.tiktok.com/@nike?lang=en',
+				snippet:
+					'Nike (@nike) on TikTok | 42.2M Likes. 8.4M Followers. Just Do It.Watch Nike\'s popular videos: "Fades, draws, slices...", "Bienvenidos al lado ...".',
+				position: 2,
+			},
+			{
+				title: "I Tested Nike's Top Secret Shoe",
+				link: 'https://www.youtube.com/watch?v=Psp3YarOKVw',
+				snippet:
+					"I went to Nike's Research Lab to test out four of their secret products Go to https://surfshark.com/boss or use code BOSS at checkout to get ...",
+				imageUrl:
+					'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRTAJe6EJHWFzDv7cNh5d6HNRKizs6_NNuOCN3NBBEkj50X6u-WAq-oQ&s',
+				videoUrl:
+					'https://encrypted-vtbn0.gstatic.com/video?q=tbn:ANd9GcQErnjMIMKLBFA3nRNE0YJd7mZiVyNRcIRHIA',
+				duration: '13:10',
+				source: 'YouTube',
+				channel: 'Mrwhosetheboss',
+				date: 'Oct 23, 2025',
+				position: 3,
+			},
+			{
+				title: "2026 Nike Hoop Summit | Full Men's Game Highlights | April ...",
+				link: 'https://www.reddit.com/r/NBA_Draft/comments/1sj5v8u/2026_nike_hoop_summit_full_mens_game_highlights/',
+				snippet:
+					"2026 Nike Hoop Summit | Full Men's Game Highlights | April 11, 2026. Video. Play. This was a very competitive game through and through. Sandler ...",
+				imageUrl:
+					'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4jmI4gOqh5kUSeN_KQ6XnsDJ66rFyuA-vnGaO7nxkatk-CvvF8aLzuQ&s',
+				duration: '13:49',
+				source: 'Reddit',
+				channel: 'NBA',
+				date: '16 hours ago',
+				position: 4,
+			},
+			{
+				title: 'NIKE FREE METCON 7 | Upgrade Or a Step Back?',
+				link: 'https://www.youtube.com/watch?v=5a0LsdBW8f0',
+				snippet:
+					'READ BEST GYM SHOES: https://thatfitfriend.com/best-gym-shoes/ The Nike Free Metcon 7 has been one of the most anticipated training shoes in ...',
+				imageUrl:
+					'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfkcOsv7YZXN1ZrebXHXZdywZ6NrDSez2_mgYdst0RjE88ad99sTd19Q&s',
+				videoUrl:
+					'https://encrypted-vtbn0.gstatic.com/video?q=tbn:ANd9GcS-knVWuGZrmfglc3whWvkQbyEqVycx_3IWHA',
+				duration: '14:48',
+				source: 'YouTube',
+				channel: 'That Fit Friend',
+				date: '1 day ago',
+				position: 5,
+			},
+			{
+				title: "2026 Nike Hoop Summit | Full Men's Game Highlights | April ...",
+				link: 'https://www.youtube.com/watch?v=MTzHDJi106g',
+				snippet:
+					'The 2026 Nike Hoop Summit delivered another unforgettable night of elite international basketball, as Team USA battled the World Select Team ...',
+				imageUrl:
+					'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4jmI4gOqh5kUSeN_KQ6XnsDJ66rFyuA-vnGaO7nxkatk-CvvF8aLzuQ&s',
+				duration: '13:49',
+				source: 'YouTube',
+				channel: 'NBA',
+				date: '17 hours ago',
+				position: 6,
+			},
+			{
+				title: 'The Pegasus 42 Has A Problem',
+				link: 'https://www.youtube.com/watch?v=PRHuGcq58LE',
+				snippet:
+					'... Nike running shoe for every type of buyer. Sneaker Links Shop My Favourite Nike Picks V5 RNR https://www.jdoqocy.com/click-101504036 ...',
+				imageUrl:
+					'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROLqJxYcM_Gk94uaZB03tiEEUFIkvun8sW9aEfqxkcWgLtywMLZwNkTw&s',
+				duration: '11:58',
+				source: 'YouTube',
+				channel: 'Elliot Page',
+				date: '2 days ago',
+				position: 7,
+			},
+			{
+				title: 'Nike Sabrina 4 First Look!',
+				link: 'https://www.youtube.com/watch?v=TvKR_aQy2Ws',
+				snippet:
+					"Here's a look at the newly unveiled Nike Sabrina 4! Support me and become a member!",
+				imageUrl:
+					'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8LKIQpkx9-3FcClL2W-vrn69OaWQhIG5G21sdbPsDqP0QjYeXjpB_Yw&s',
+				videoUrl:
+					'https://encrypted-vtbn0.gstatic.com/video?q=tbn:ANd9GcTns52eugYqOVzo0icO4c4ZA21OpmcErpjFHw',
+				duration: '13:24',
+				source: 'YouTube',
+				channel: 'The Sole Drop',
+				date: '20 hours ago',
+				position: 8,
+			},
+			{
+				title: "2026 Nike Hoop Summit | Full Women's Game Highlights ...",
+				link: 'https://www.youtube.com/watch?v=TdhD4FW4Lps',
+				snippet: "2026 Nike Hoop Summit | Full Women's Game Highlights | April 11, 2026.",
+				imageUrl:
+					'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQo_LoyCx787ioTCg1xaFPjWNKIrpJrGGHA-NAh-ATgyPblDyjJeElSaQ&s',
+				duration: '10:26',
+				source: 'YouTube',
+				channel: 'NBA',
+				date: '19 hours ago',
+				position: 9,
+			},
+			{
+				title: 'FINALLY! - A Nike You Can Wear All Day For Foot Pain',
+				link: 'https://www.youtube.com/watch?v=K4pTYdFL3w0',
+				snippet:
+					'Real Foot Doctor explains if the Nike Structure Plus is a good daily shoe for foot pain. Learn the secrets of performance shoe & orthotic ...',
+				imageUrl:
+					'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJ1NNQRAaQ_xHxm3oCaz4CWCSOaHbwdEX0r8t6ki-juq_zyZl6xfgplw&s',
+				duration: '15:13',
+				source: 'YouTube',
+				channel: 'Foot Doctor Zach',
+				date: '1 month ago',
+				position: 10,
+			},
+		],
+	},
+	adidas1: {
+		searchParameters: {
+			q: 'adidas',
+			gl: 'us',
+			hl: 'en',
+			type: 'videos',
+			num: 10,
+			autocorrect: true,
+			page: 1,
+			engine: 'google',
+		},
+		videos: [
+			{
+				title: 'adidas',
+				link: 'https://www.youtube.com/adidas',
+				snippet:
+					'Welcome to the ultimate sport playlist, where we dive deep into the lives, careers and thoughts of the most iconic athletes on earth!',
+				position: 1,
+			},
+			{
+				title: 'adidas',
+				link: 'https://www.youtube.com/user/adidas',
+				snippet:
+					"Zen Flow: adidas Yoga Haven · Welcome to the adidas Yoga Haven! · Improve Flexibility Fast: adidas' 15-Minute Hip Mobility Yoga Flow · Master Balance in 11 ...",
+				position: 2,
+			},
+			{
+				title: 'adidas (@adidas)',
+				link: 'https://www.tiktok.com/@adidas',
+				snippet:
+					'adidas (@adidas) on TikTok | 114.6M Likes. 10.8M Followers. Watch adidas\'s popular videos: "why is it always str...", "this comment section...".',
+				position: 3,
+			},
+			{
+				title: 'Adidas Hyperboost Edge vs Asics Superblast 3',
+				link: 'https://www.youtube.com/watch?v=M535VPgxm0c',
+				snippet:
+					"The Adidas Hyperboost Edge and Asics Superblast 3 are both new super-trainers launched in 2026 that we've enjoyed testing, but which should ...",
+				imageUrl:
+					'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLEkR2WORVTSnTW7Lrb79oP1V4kpZKcW-cdqgPhEuoYyIqIvtT9m1ogg&s',
+				duration: '8:45',
+				source: 'YouTube',
+				channel: 'The Run Testers',
+				date: '1 day ago',
+				position: 4,
+			},
+			{
+				title: 'adidas Badbo 1.0 #weartesters #sneakers #badbunny',
+				link: 'https://www.youtube.com/shorts/MliR42M1brQ',
+				snippet:
+					'Hey Guys! Today we take a detailed look and review at the adidas Badbo 1.0 sneaker for Bad Bunny. Buy at StockX: https://get.aspr.app/SH1gek ...',
+				imageUrl:
+					'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSckSgCr28v5Hz6lSE4pMeDldapse_yNtm1e-TTfYldI1QzFLEqQqPymw&s',
+				duration: '1:48',
+				source: 'YouTube',
+				channel: 'WearTesters',
+				date: '3 days ago',
+				position: 5,
+			},
+			{
+				title: 'adidas Badbo 1.0 Review',
+				link: 'https://www.youtube.com/watch?v=8ZEizEPmhPk',
+				snippet:
+					'Hey Guys! Today we take a detailed look and review at the adidas Badbo 1.0 sneaker for Bad Bunny. Buy at StockX: https://get.aspr.app/SH1gek ...',
+				imageUrl:
+					'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgKT1MtHkZdik0fn_Od0Y5aKGMJysSHZlG_eD3DKH0lEJKuGnt9gGrQg&s',
+				duration: '12:58',
+				source: 'YouTube',
+				channel: 'WearTesters',
+				date: '6 days ago',
+				position: 6,
+			},
+			{
+				title: 'Trying the Pharrell x Adidas Flat Earther',
+				link: 'https://www.youtube.com/shorts/DCpwaICrWoY',
+				snippet:
+					"Trying the Pharrell x Adidas Flat Earther . 682. Dislike. 34. Share. Video unavailable. This content isn't available. Skip video.",
+				imageUrl:
+					'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQiBVZI7y-Q5qPN1Grb0kgSQSyfeFnf9VSQZJ8KPB7fI4dyTCAAOvO6w&s',
+				duration: '1:21',
+				source: 'YouTube',
+				channel: 'Steve Natto Sneaker Reviews',
+				date: '5 days ago',
+				position: 7,
+			},
+			{
+				title: 'Superstar | adidas Originals',
+				link: 'https://www.youtube.com/watch?v=I6AxpJHSiY0',
+				snippet:
+					'The search continues. #adidasSuperstar​ Created for basketball, adopted by the pioneers of streetwear, and redefined by every generation ...',
+				imageUrl:
+					'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLyZEjkD0t5skIWYDKoYP2XrqyApLL4SBN01M1_pOFuTSdUHghOFvy5A&s',
+				duration: '1:33',
+				source: 'YouTube',
+				channel: 'adidas Originals',
+				date: '1 month ago',
+				position: 8,
+			},
+			{
+				title: 'Superstar | adidas Originals',
+				link: 'https://www.youtube.com/adidasoriginals',
+				snippet: 'Share your videos with friends, family, and the world.',
+				position: 9,
+			},
+			{
+				title: 'Asics Megablast vs Adidas Hyperboost Edge: We pick the best ...',
+				link: 'https://www.youtube.com/watch?v=VyGxhM6-eg4',
+				snippet:
+					"We've got two big hype shoes going head to head: the much lauded ASICS Megablast versus the newer Adidas Hyperboost Edge.",
+				imageUrl:
+					'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLOXxQTiYI7q-5pFhCQuISxSDIqnFX6Y4eVpuyiebcnVhHAPnVvLQt1g&s',
+				duration: '14:26',
+				source: 'YouTube',
+				channel: 'The Run Testers',
+				date: '2 days ago',
+				position: 10,
 			},
 		],
 	},

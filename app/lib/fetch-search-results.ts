@@ -3,6 +3,8 @@ import {
 	type SearchResult,
 	sampleData,
 	sampleImages,
+	sampleVideos,
+	type VideoSearchResult,
 } from '~/lib/sample-data';
 
 export async function fetchSearchResults(
@@ -42,4 +44,26 @@ export async function fetchImageSearchResults(
 			(image) => image.position > (page - 1) * 10 && image.position <= page * 10,
 		),
 	};
+}
+
+export async function fetchVideoSearchResults(
+	query: string,
+	page: number,
+): Promise<VideoSearchResult> {
+	await new Promise((resolve) => setTimeout(resolve, 1000));
+	return query + page in sampleVideos
+		? sampleVideos[query + page]
+		: {
+				searchParameters: {
+					q: query,
+					gl: 'us',
+					hl: 'en',
+					type: 'videos',
+					num: 10,
+					autocorrect: true,
+					page,
+					engine: 'google',
+				},
+				videos: [],
+			};
 }

@@ -8,16 +8,21 @@ import { Button } from '~/components/ui/button';
 import { Field, FieldLabel } from '~/components/ui/field';
 import { Input } from '~/components/ui/input';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs';
-import { fetchImageSearchResults, fetchSearchResults } from '~/lib/fetch-search-results';
+import { VideoSearchResults } from '~/components/video-search-results';
+import {
+	fetchImageSearchResults,
+	fetchSearchResults,
+	fetchVideoSearchResults,
+} from '~/lib/fetch-search-results';
 import type { Route } from './+types/search';
 
-const searchTypes = ['all', 'images'] as const;
+const searchTypes = ['all', 'images', 'videos'] as const;
 
 export async function loader({ request }: Route.LoaderArgs) {
 	const url = new URL(request.url);
 	const query = url.searchParams.get('q')?.replace(/\s+/g, ' ').trim();
 	const searchType: (typeof searchTypes)[number] =
-		url.searchParams.get('type') === 'images' ? 'images' : 'all';
+		searchTypes.find((type) => type === url.searchParams.get('type')) ?? 'all';
 
 	if (!query) {
 		return redirect('/');
@@ -27,6 +32,15 @@ export async function loader({ request }: Route.LoaderArgs) {
 		const { images } = await fetchImageSearchResults(query, 1);
 		return {
 			results: images,
+			query,
+			searchType,
+		};
+	}
+
+	if (searchType === 'videos') {
+		const { videos } = await fetchVideoSearchResults(query, 1);
+		return {
+			results: videos,
 			query,
 			searchType,
 		};
@@ -144,6 +158,12 @@ export default function Search({ loaderData }: Route.ComponentProps) {
 								<ImageSearchResults
 									query={query}
 									initialImageResults={searchType === 'images' ? results : []}
+								/>
+							</TabsContent>
+							<TabsContent value="videos" className="space-y-3">
+								<VideoSearchResults
+									initialVideoResults={searchType === 'videos' ? results : []}
+									query={query}
 								/>
 							</TabsContent>
 						</>

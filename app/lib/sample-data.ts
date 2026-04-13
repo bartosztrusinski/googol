@@ -2368,51 +2368,107 @@ export const sampleVideos: Record<string, VideoSearchResult> = {
 			type: 'videos',
 			num: 10,
 			autocorrect: true,
-			page: 1,
+			page: 2,
 			engine: 'google',
 		},
 		videos: [
 			{
-				title: 'Beats x Nike',
-				link: 'https://www.youtube.com/nike',
+				title: 'RANKING ALL 16 Nike Mercurial Vapor Generations from ...',
+				link: 'https://www.youtube.com/watch?v=MuKF0mF5XIE',
 				snippet:
-					"Behind the Design · Behind the Hyperboot: A Nike x Hyperice Innovation | Nike · The Nike A'one with A'ja Wilson and Issa Rae | Nike · AIRMAX 1000: The Next ...",
+					'... Nike Mercurial Vapors, on the basis of modern day fit, feel and performance standards, from worst to best! These are just my rankings though ...',
+				imageUrl:
+					'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLxMbnRSufcS5dWDcdZnxN53pCdfdGSS2PoWbMQZQaH_nBgMhpcnZ6Vg&s',
+				duration: '22:51',
+				source: 'YouTube',
+				channel: 'Soccer Reviews For You',
+				date: '2 days ago',
 				position: 1,
 			},
 			{
-				title: 'Nike (@nike)',
-				link: 'https://www.tiktok.com/@nike?lang=en',
+				title: 'Nike World Hoop Summit Takeaways: Lucas Morillo, Brandon ...',
+				link: 'https://www.youtube.com/watch?v=99tZkPMJPfs',
 				snippet:
-					'Nike (@nike) on TikTok | 42.2M Likes. 8.4M Followers. Just Do It.Watch Nike\'s popular videos: "Fades, draws, slices...", "Bienvenidos al lado ...".',
+					'The Sleepers react to the Nike World Hoop Summit! The College Basketball stock market is LIVE on Stakeholder! Buy low or sell high on teams ...',
+				imageUrl:
+					'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROpPxxc1U3179PGT7pBFYgcGU880lw3wRixukP9UPm1YQRkq9FiuSWqw&s',
+				videoUrl:
+					'https://encrypted-vtbn0.gstatic.com/video?q=tbn:ANd9GcSLUu15KA8O_iy7eTa-Y-GVEpkTQrJWfGNl8w',
+				duration: '26:28',
+				source: 'YouTube',
+				channel: 'Sleepers Media',
+				date: '16 hours ago',
 				position: 2,
 			},
 			{
-				title: "I Tested Nike's Top Secret Shoe",
-				link: 'https://www.youtube.com/watch?v=Psp3YarOKVw',
-				snippet:
-					"I went to Nike's Research Lab to test out four of their secret products Go to https://surfshark.com/boss or use code BOSS at checkout to get ...",
+				title: "2026 Nike Hoop Summit | Full Women's Game Highlights ...",
+				link: 'https://www.youtube.com/watch?v=TdhD4FW4Lps',
+				snippet: "2026 Nike Hoop Summit | Full Women's Game Highlights | April 11, 2026.",
 				imageUrl:
-					'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRTAJe6EJHWFzDv7cNh5d6HNRKizs6_NNuOCN3NBBEkj50X6u-WAq-oQ&s',
-				videoUrl:
-					'https://encrypted-vtbn0.gstatic.com/video?q=tbn:ANd9GcQErnjMIMKLBFA3nRNE0YJd7mZiVyNRcIRHIA',
-				duration: '13:10',
+					'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQo_LoyCx787ioTCg1xaFPjWNKIrpJrGGHA-NAh-ATgyPblDyjJeElSaQ&s',
+				duration: '10:26',
 				source: 'YouTube',
-				channel: 'Mrwhosetheboss',
-				date: 'Oct 23, 2025',
+				channel: 'NBA',
+				date: '1 day ago',
 				position: 3,
 			},
 			{
-				title: "2026 Nike Hoop Summit | Full Men's Game Highlights | April ...",
-				link: 'https://www.reddit.com/r/NBA_Draft/comments/1sj5v8u/2026_nike_hoop_summit_full_mens_game_highlights/',
+				title: 'Behind the Science | Nike Mind Technology',
+				link: 'https://www.youtube.com/watch?v=jDJCavBaBHs',
 				snippet:
-					"2026 Nike Hoop Summit | Full Men's Game Highlights | April 11, 2026. Video. Play. This was a very competitive game through and through. Sandler ...",
+					"Comments. 233. Hi Nike, as a Podiatrist, it's great to see reference to the Nike Mind Science Department as so much about shoe design is based ...",
 				imageUrl:
-					'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4jmI4gOqh5kUSeN_KQ6XnsDJ66rFyuA-vnGaO7nxkatk-CvvF8aLzuQ&s',
-				duration: '13:49',
-				source: 'Reddit',
-				channel: 'NBA',
-				date: '16 hours ago',
+					'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnFGmt5sakTT1HcW7OISShawbJQZTLwnMY3UBhuHOPlK1NqKugftDJMg&s',
+				videoUrl:
+					'https://encrypted-vtbn0.gstatic.com/video?q=tbn:ANd9GcTb_mMGzfDuCSjK42K6HqqPIsK0JY8_4H40wA',
+				duration: '3:00',
+				source: 'YouTube',
+				channel: 'Nike',
+				date: 'Oct 24, 2025',
 				position: 4,
+			},
+			{
+				title: 'How Nike Lost Its Way',
+				link: 'https://www.youtube.com/watch?v=WGhy62UZnbg',
+				snippet:
+					'Thanks to Storyblocks for sponsoring this video. Get 15% off any annual plan for a limited time, only available through this link: ...',
+				imageUrl:
+					'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-vLJKYz62IuG2JTheFSDPw4nKsmCZq3HgVQJPaVky0VqaQnoHQZCY-w&s',
+				videoUrl:
+					'https://encrypted-vtbn0.gstatic.com/video?q=tbn:ANd9GcSZne-g-6FrqGkIgYvCP49QubwBej3I7qyQkQ',
+				duration: '18:16',
+				source: 'YouTube',
+				channel: 'Wendover Productions',
+				date: '2 weeks ago',
+				position: 5,
+			},
+			{
+				title: 'Nike Ja 3 Jurassic Park Explorer vs Raptor: Which is Better?',
+				link: 'https://www.youtube.com/shorts/oZJyeX8VpT0',
+				snippet:
+					"Nike Ja 3 Jurassic Park Explorer vs Raptor: Which is Better? . 446. Dislike. 17. Share. Video unavailable. This content isn't available.",
+				imageUrl:
+					'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKB8dvR4AaK4xr6ImgpOtoB7VbI4BpmLSXLaDc4PwlH4PQTjzuKdhn8Q&s',
+				duration: '1:10',
+				source: 'YouTube',
+				channel: 'Steve Natto Sneaker Reviews',
+				date: '2 days ago',
+				position: 6,
+			},
+			{
+				title: 'Top 10 Nike Sneakers Under Retail (Best Deals Right Now)',
+				link: 'https://www.youtube.com/watch?v=w-yoYEUM3uc',
+				snippet:
+					'Shop all deals in vid: http://www.collectivekicks.com/sneaker-deals 0:00 Extra 20% off Nike Sale use code LASTSHOT https://bit.ly/4bV0W2C ...',
+				imageUrl:
+					'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPxIc6pqQ_tpc35nXFIr0qyn8Mu8fcPw2-ghCtfjuWP1GX7TrjDQkdiQ&s',
+				videoUrl:
+					'https://encrypted-vtbn0.gstatic.com/video?q=tbn:ANd9GcTa0bBlSWhAmWNkNXmRYHguiFJdwC36z60l1A',
+				duration: '7:20',
+				source: 'YouTube',
+				channel: 'Hes Kicks',
+				date: '1 week ago',
+				position: 7,
 			},
 			{
 				title: 'NIKE FREE METCON 7 | Upgrade Or a Step Back?',
@@ -2426,73 +2482,33 @@ export const sampleVideos: Record<string, VideoSearchResult> = {
 				duration: '14:48',
 				source: 'YouTube',
 				channel: 'That Fit Friend',
-				date: '1 day ago',
-				position: 5,
-			},
-			{
-				title: "2026 Nike Hoop Summit | Full Men's Game Highlights | April ...",
-				link: 'https://www.youtube.com/watch?v=MTzHDJi106g',
-				snippet:
-					'The 2026 Nike Hoop Summit delivered another unforgettable night of elite international basketball, as Team USA battled the World Select Team ...',
-				imageUrl:
-					'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4jmI4gOqh5kUSeN_KQ6XnsDJ66rFyuA-vnGaO7nxkatk-CvvF8aLzuQ&s',
-				duration: '13:49',
-				source: 'YouTube',
-				channel: 'NBA',
-				date: '17 hours ago',
-				position: 6,
-			},
-			{
-				title: 'The Pegasus 42 Has A Problem',
-				link: 'https://www.youtube.com/watch?v=PRHuGcq58LE',
-				snippet:
-					'... Nike running shoe for every type of buyer. Sneaker Links Shop My Favourite Nike Picks V5 RNR https://www.jdoqocy.com/click-101504036 ...',
-				imageUrl:
-					'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROLqJxYcM_Gk94uaZB03tiEEUFIkvun8sW9aEfqxkcWgLtywMLZwNkTw&s',
-				duration: '11:58',
-				source: 'YouTube',
-				channel: 'Elliot Page',
 				date: '2 days ago',
-				position: 7,
-			},
-			{
-				title: 'Nike Sabrina 4 First Look!',
-				link: 'https://www.youtube.com/watch?v=TvKR_aQy2Ws',
-				snippet:
-					"Here's a look at the newly unveiled Nike Sabrina 4! Support me and become a member!",
-				imageUrl:
-					'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8LKIQpkx9-3FcClL2W-vrn69OaWQhIG5G21sdbPsDqP0QjYeXjpB_Yw&s',
-				videoUrl:
-					'https://encrypted-vtbn0.gstatic.com/video?q=tbn:ANd9GcTns52eugYqOVzo0icO4c4ZA21OpmcErpjFHw',
-				duration: '13:24',
-				source: 'YouTube',
-				channel: 'The Sole Drop',
-				date: '20 hours ago',
 				position: 8,
 			},
 			{
-				title: "2026 Nike Hoop Summit | Full Women's Game Highlights ...",
-				link: 'https://www.youtube.com/watch?v=TdhD4FW4Lps',
-				snippet: "2026 Nike Hoop Summit | Full Women's Game Highlights | April 11, 2026.",
+				title: 'What China Is Doing To Nike Is Insane',
+				link: 'https://www.youtube.com/watch?v=uVgJb7VvTQk',
+				snippet:
+					'Chinese running shoes are outperforming Nike and Adidas and most people have no idea why. I bought the Li-Ning Red Hare 9, Dynafish Xiaonian ...',
 				imageUrl:
-					'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQo_LoyCx787ioTCg1xaFPjWNKIrpJrGGHA-NAh-ATgyPblDyjJeElSaQ&s',
-				duration: '10:26',
+					'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVgb032L7DjqwZa6nNy5WQFYmSwb7NbDZCKymi38Y7fQl4BKey0UnG7g&s',
+				duration: '15:35',
 				source: 'YouTube',
-				channel: 'NBA',
-				date: '19 hours ago',
+				channel: 'Elliot Page',
+				date: '3 weeks ago',
 				position: 9,
 			},
 			{
-				title: 'FINALLY! - A Nike You Can Wear All Day For Foot Pain',
-				link: 'https://www.youtube.com/watch?v=K4pTYdFL3w0',
+				title: "Don't Buy Nike at Marshalls Until You See THIS!",
+				link: 'https://www.facebook.com/rossenreports/posts/dont-buy-nike-at-marshalls-until-you-see-this/1514452633375519/',
 				snippet:
-					'Real Foot Doctor explains if the Nike Structure Plus is a good daily shoe for foot pain. Learn the secrets of performance shoe & orthotic ...',
+					'Recent Posts. LoyalCelery4248 ▻ Sneaker Enthusiasts. 13w · Public · Found these at my local Marshall\'s. "Nike by Ryan" - any idea what that ...',
 				imageUrl:
-					'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJ1NNQRAaQ_xHxm3oCaz4CWCSOaHbwdEX0r8t6ki-juq_zyZl6xfgplw&s',
-				duration: '15:13',
-				source: 'YouTube',
-				channel: 'Foot Doctor Zach',
-				date: '1 month ago',
+					'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqncBowMoxprOw4QJ9NcuQRIL6heAD2c1cHus0kQ_D1SAzO2qVYsIkqA&s',
+				duration: '0:39',
+				source: 'Facebook',
+				channel: 'Jeff Rossen',
+				date: '5 hours ago',
 				position: 10,
 			},
 		],

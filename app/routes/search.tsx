@@ -46,17 +46,18 @@ export async function loader({ request }: Route.LoaderArgs) {
 		};
 	}
 
-	const { organic, relatedSearches } = await fetchSearchResults(query, 1);
+	const { organic, relatedSearches, knowledgeGraph } = await fetchSearchResults(query, 1);
 	return {
 		results: organic,
 		relatedSearches,
+		knowledgeGraph,
 		query,
 		searchType,
 	};
 }
 
 export default function Search({ loaderData }: Route.ComponentProps) {
-	const { results, relatedSearches, query, searchType } = loaderData;
+	const { results, relatedSearches, knowledgeGraph, query, searchType } = loaderData;
 	const { formAction, formMethod, location } = useNavigation();
 	const [inputQuery, setInputQuery] = useState(query);
 	const isSearching = formAction === '/search' && formMethod === 'GET';
@@ -152,6 +153,7 @@ export default function Search({ loaderData }: Route.ComponentProps) {
 									query={query}
 									initialResults={searchType === 'all' ? results : []}
 									relatedSearches={searchType === 'all' ? relatedSearches : undefined}
+									knowledgeGraph={searchType === 'all' ? knowledgeGraph : undefined}
 								/>
 							</TabsContent>
 							<TabsContent value="images" className="space-y-4">

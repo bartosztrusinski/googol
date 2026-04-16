@@ -1,6 +1,7 @@
 import { ArrowDown } from 'lucide-react';
 import { useState, useTransition } from 'react';
 import { Link } from 'react-router';
+import { KnowledgeGraph } from '~/components/knowledge-graph';
 import { RelatedSearches } from '~/components/related-searches';
 import { Button } from '~/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '~/components/ui/card';
@@ -10,10 +11,11 @@ import type { SearchResult } from '~/lib/sample-data';
 type Props = {
 	initialResults: SearchResult['organic'];
 	relatedSearches?: SearchResult['relatedSearches'];
+	knowledgeGraph?: SearchResult['knowledgeGraph'];
 	query: string;
 };
 
-export function SearchResults({ initialResults, relatedSearches, query }: Props) {
+export function SearchResults({ initialResults, relatedSearches, knowledgeGraph, query }: Props) {
 	const [isPending, startTransition] = useTransition();
 	const [moreResults, setMoreResults] = useState<SearchResult['organic']>([]);
 	const [hasMoreResults, setHasMoreResults] = useState(initialResults.length > 0);
@@ -31,6 +33,7 @@ export function SearchResults({ initialResults, relatedSearches, query }: Props)
 
 	return (
 		<>
+			{knowledgeGraph && <KnowledgeGraph {...knowledgeGraph} />}
 			<ul className="space-y-4">
 				{searchResults.map((result) => (
 					<li key={result.link}>

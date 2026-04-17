@@ -1,33 +1,34 @@
 import { Link } from 'react-router';
 import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card';
 import { Separator } from '~/components/ui/separator';
+import type { SearchResult } from '~/lib/sample-data';
 
 type Props = {
-	searches: string[];
+	queries: Required<SearchResult>['relatedSearches'];
 };
 
-export function RelatedSearches({ searches: keywords }: Props) {
+export function RelatedSearches({ queries }: Props) {
 	return (
 		<Card className="shadow">
 			<CardHeader>
-				<CardTitle className="text-lg font-medium">People also search for</CardTitle>
+				<CardTitle className="text-xl font-medium">People also search for</CardTitle>
 			</CardHeader>
 			<CardContent>
 				<ul>
-					{keywords.map((keyword, index) => {
-						const isLastKeyword = index === keywords.length - 1;
+					{queries.map(({ query }, index) => {
+						const isLastQuery = index === queries.length - 1;
 						return (
-							<li key={keyword}>
+							<li key={query}>
 								<Link
 									to={{
 										pathname: '/search',
-										search: `?q=${encodeURIComponent(keyword)}`,
+										search: `?q=${encodeURIComponent(query)}`,
 									}}
-									className="py-3 block text-base"
+									className="py-4 block text-base"
 								>
-									{keyword}
+									{query}
 								</Link>
-								{!isLastKeyword && <Separator />}
+								{!isLastQuery && <Separator />}
 							</li>
 						);
 					})}

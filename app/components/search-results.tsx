@@ -2,6 +2,7 @@ import { ArrowDown } from 'lucide-react';
 import { useState, useTransition } from 'react';
 import { Link } from 'react-router';
 import { KnowledgeGraph } from '~/components/knowledge-graph';
+import { PeopleAlsoAsk } from '~/components/people-also-ask';
 import { RelatedSearches } from '~/components/related-searches';
 import { Button } from '~/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '~/components/ui/card';
@@ -12,10 +13,17 @@ type Props = {
 	initialResults: SearchResult['organic'];
 	relatedSearches?: SearchResult['relatedSearches'];
 	knowledgeGraph?: SearchResult['knowledgeGraph'];
+	peopleAlsoAsk?: SearchResult['peopleAlsoAsk'];
 	query: string;
 };
 
-export function SearchResults({ initialResults, relatedSearches, knowledgeGraph, query }: Props) {
+export function SearchResults({
+	initialResults,
+	relatedSearches,
+	knowledgeGraph,
+	peopleAlsoAsk,
+	query,
+}: Props) {
 	const [isPending, startTransition] = useTransition();
 	const [moreResults, setMoreResults] = useState<SearchResult['organic']>([]);
 	const [hasMoreResults, setHasMoreResults] = useState(initialResults.length > 0);
@@ -56,9 +64,14 @@ export function SearchResults({ initialResults, relatedSearches, knowledgeGraph,
 						</Card>
 					</li>
 				))}
+				{peopleAlsoAsk && peopleAlsoAsk.length > 0 && (
+					<li>
+						<PeopleAlsoAsk questions={peopleAlsoAsk} />
+					</li>
+				)}
 				{relatedSearches && (
 					<li>
-						<RelatedSearches searches={relatedSearches.map(({ query }) => query)} />
+						<RelatedSearches queries={relatedSearches} />
 					</li>
 				)}
 			</ul>

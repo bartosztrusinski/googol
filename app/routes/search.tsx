@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { Form, Link, redirect, useNavigation } from 'react-router';
 import { ImageSearchResults } from '~/components/image-search-results';
 import { ModeToggle } from '~/components/mode-toggle';
+import type { SearchResultItem } from '~/components/search-results';
 import { SearchResults } from '~/components/search-results';
 import { Button } from '~/components/ui/button';
 import { Field, FieldLabel } from '~/components/ui/field';
@@ -14,9 +15,52 @@ import {
 	fetchSearchResults,
 	fetchVideoSearchResults,
 } from '~/lib/fetch-search-results';
+import type { SearchResult } from '~/lib/sample-data';
 import type { Route } from './+types/search';
 
 const searchTypes = ['all', 'images', 'videos'] as const;
+
+function buildSearchResultItems({
+	organic,
+	relatedSearches,
+	peopleAlsoAsk,
+	batch,
+}: {
+	organic: SearchResult['organic'];
+	relatedSearches?: SearchResult['relatedSearches'];
+	peopleAlsoAsk?: SearchResult['peopleAlsoAsk'];
+	batch: number;
+}): SearchResultItem[] {
+	const resultItems = organic.map((result, index) => ({
+		type: 'result' as const,
+		key: `batch-${batch}-result-${index}-${result.link}`,
+		data: result,
+	}));
+
+	const peopleAlsoAskItem: SearchResultItem[] =
+		peopleAlsoAsk && peopleAlsoAsk.length > 0
+			? [
+					...resultItems.slice(0, 3),
+					{
+						type: 'people-also-ask' as const,
+						key: 'people-also-ask',
+						data: peopleAlsoAsk,
+					},
+					...resultItems.slice(3),
+				]
+			: resultItems;
+
+	return relatedSearches && relatedSearches.length > 0
+		? [
+				...peopleAlsoAskItem,
+				{
+					type: 'related-searches' as const,
+					key: `related-searches-batch-${batch}`,
+					data: relatedSearches,
+				},
+			]
+		: peopleAlsoAskItem;
+}
 
 export async function loader({ request }: Route.LoaderArgs) {
 	const url = new URL(request.url);
@@ -51,7 +95,12 @@ export async function loader({ request }: Route.LoaderArgs) {
 		1,
 	);
 	return {
-		results: organic,
+		results: buildSearchResultItems({
+			organic,
+			relatedSearches,
+			peopleAlsoAsk,
+			batch: 0,
+		}),
 		relatedSearches,
 		knowledgeGraph,
 		peopleAlsoAsk,
@@ -61,7 +110,7 @@ export async function loader({ request }: Route.LoaderArgs) {
 }
 
 export default function Search({ loaderData }: Route.ComponentProps) {
-	const { results, relatedSearches, knowledgeGraph, peopleAlsoAsk, query, searchType } = loaderData;
+	const { results, knowledgeGraph, query, searchType } = loaderData;
 	const { formAction, formMethod, location } = useNavigation();
 	const [inputQuery, setInputQuery] = useState(query);
 	const isSearching = formAction === '/search' && formMethod === 'GET';
@@ -155,10 +204,8 @@ export default function Search({ loaderData }: Route.ComponentProps) {
 								<SearchResults
 									key={query}
 									query={query}
-									initialResults={searchType === 'all' ? results : []}
-									relatedSearches={searchType === 'all' ? relatedSearches : undefined}
+									initialItems={searchType === 'all' ? results : []}
 									knowledgeGraph={searchType === 'all' ? knowledgeGraph : undefined}
-									peopleAlsoAsk={searchType === 'all' ? peopleAlsoAsk : undefined}
 								/>
 							</TabsContent>
 							<TabsContent value="images" className="space-y-4">

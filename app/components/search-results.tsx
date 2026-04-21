@@ -6,6 +6,7 @@ import { PeopleAlsoAsk } from '~/components/people-also-ask';
 import { RelatedSearches } from '~/components/related-searches';
 import { Button } from '~/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '~/components/ui/card';
+import { Separator } from '~/components/ui/separator';
 import { fetchSearchResults } from '~/lib/fetch-search-results';
 import type { SearchResult } from '~/lib/sample-data';
 
@@ -20,11 +21,7 @@ export type SearchResultItem =
 	| { type: 'people-also-ask'; key: string; data: Required<SearchResult>['peopleAlsoAsk'] }
 	| { type: 'related-searches'; key: string; data: Required<SearchResult>['relatedSearches'] };
 
-export function SearchResults({
-	initialItems,
-	knowledgeGraph,
-	query,
-}: Props) {
+export function SearchResults({ initialItems, knowledgeGraph, query }: Props) {
 	const [isPending, startTransition] = useTransition();
 	const [moreItems, setMoreItems] = useState<SearchResultItem[]>([]);
 	const [hasMoreResults, setHasMoreResults] = useState(
@@ -71,6 +68,7 @@ export function SearchResults({
 				{renderedItems.map((item) => {
 					if (item.type === 'result') {
 						const result = item.data;
+						const siteLinks = result.sitelinks ?? [];
 						return (
 							<li key={item.key}>
 								<Card className="shadow gap-3">
@@ -91,8 +89,25 @@ export function SearchResults({
 											</CardDescription>
 										</CardHeader>
 									</Link>
-									<CardContent>
+									<CardContent className="space-y-3">
 										<p className="text-pretty text-muted-foreground">{result.snippet}</p>
+										{siteLinks.length > 0 && (
+											<ul className="pt-2">
+												{siteLinks.map((siteLink) => (
+													<li key={siteLink.link}>
+														<Separator className="my-0" />
+														<Link
+															to={siteLink.link}
+															target="_blank"
+															rel="noopener noreferrer"
+															className="py-4 block text-base"
+														>
+															{siteLink.title}
+														</Link>
+													</li>
+												))}
+											</ul>
+										)}
 									</CardContent>
 								</Card>
 							</li>

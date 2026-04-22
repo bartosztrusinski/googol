@@ -1,10 +1,10 @@
 import { Link } from 'react-router';
 import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card';
 import { Separator } from '~/components/ui/separator';
-import type { SearchResult } from '~/lib/sample-data';
+import type { RelatedSearches as RelatedSearchesData } from '~/lib/types';
 
 type Props = {
-	queries: Required<SearchResult>['relatedSearches'];
+	queries: RelatedSearchesData;
 };
 
 export function RelatedSearches({ queries }: Props) {

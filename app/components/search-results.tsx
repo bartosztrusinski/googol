@@ -7,55 +7,50 @@ import { RelatedSearches } from '~/components/related-searches';
 import { Button } from '~/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '~/components/ui/card';
 import { Separator } from '~/components/ui/separator';
-import { fetchSearchResults } from '~/lib/fetch-search-results';
-import type { SearchResult } from '~/lib/sample-data';
+import { fetchAllSearchResults } from '~/lib/fetch-search-results';
+import type { AllSearchResponse, SearchResultItem } from '~/lib/types';
 
 type Props = {
 	initialItems: SearchResultItem[];
-	knowledgeGraph?: SearchResult['knowledgeGraph'];
+	knowledgeGraph?: AllSearchResponse['knowledgeGraph'];
 	query: string;
 };
-
-export type SearchResultItem =
-	| { type: 'result'; key: string; data: SearchResult['organic'][0] }
-	| { type: 'people-also-ask'; key: string; data: Required<SearchResult>['peopleAlsoAsk'] }
-	| { type: 'related-searches'; key: string; data: Required<SearchResult>['relatedSearches'] };
 
 export function SearchResults({ initialItems, knowledgeGraph, query }: Props) {
 	const [isPending, startTransition] = useTransition();
 	const [moreItems, setMoreItems] = useState<SearchResultItem[]>([]);
 	const [hasMoreResults, setHasMoreResults] = useState(
-		initialItems.some((item) => item.type === 'result'),
+		initialItems.some((item) => item.type === 'organic'),
 	);
 	const [page, setPage] = useState(1);
 	const renderedItems = [...initialItems, ...moreItems];
 
 	async function fetchMoreResults() {
 		startTransition(async () => {
-			const {
-				organic,
-				relatedSearches: pageRelatedSearches,
-				searchParameters,
-			} = await fetchSearchResults(query, page + 1, false);
+			const { organic, relatedSearches, searchParameters } = await fetchAllSearchResults(
+				query,
+				page + 1,
+				false,
+			);
 
-			const pageItems: SearchResultItem[] = [
-				...organic.map((result, index) => ({
-					type: 'result' as const,
-					key: `batch-${searchParameters.page}-result-${index}-${result.link}`,
-					data: result,
-				})),
-				...(pageRelatedSearches && pageRelatedSearches.length > 0
+			const organicItems: SearchResultItem[] = organic.map((data) => ({
+				type: 'organic',
+				key: `organic-${data.link}-page-${searchParameters.page}`,
+				data,
+			}));
+
+			const relatedItems: SearchResultItem[] =
+				relatedSearches && relatedSearches.length > 0
 					? [
 							{
-								type: 'related-searches' as const,
-								key: `related-searches-batch-${searchParameters.page}`,
-								data: pageRelatedSearches,
+								type: 'related-searches',
+								key: `related-searches-page-${searchParameters.page}`,
+								data: relatedSearches,
 							},
 						]
-					: []),
-			];
+					: [];
 
-			setMoreItems((prev) => [...prev, ...pageItems]);
+			setMoreItems((prev) => [...prev, ...organicItems, ...relatedItems]);
 			setHasMoreResults(organic.length > 0);
 			setPage(searchParameters.page);
 		});
@@ -66,7 +61,7 @@ export function SearchResults({ initialItems, knowledgeGraph, query }: Props) {
 			{knowledgeGraph && <KnowledgeGraph {...knowledgeGraph} />}
 			<ul className="space-y-4">
 				{renderedItems.map((item) => {
-					if (item.type === 'result') {
+					if (item.type === 'organic') {
 						const result = item.data;
 						const siteLinks = result.sitelinks ?? [];
 						return (

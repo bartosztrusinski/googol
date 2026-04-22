@@ -1,84 +1,6 @@
-type SearchParameters = {
-	q: string;
-	gl: string;
-	hl: string;
-	type: string;
-	num: number;
-	autocorrect: boolean;
-	page: number;
-	engine: string;
-};
+import type { AllSearchResponse, ImageSearchResponse, VideoSearchResponse } from '~/lib/types';
 
-export type SearchResult = {
-	searchParameters: SearchParameters;
-	organic: Array<{
-		title: string;
-		link: string;
-		snippet: string;
-		position: number;
-		sitelinks?: Array<{
-			title: string;
-			link: string;
-		}>;
-		date?: string;
-		currency?: string;
-		price?: number;
-	}>;
-	relatedSearches?: Array<{ query: string }>;
-	knowledgeGraph?: {
-		title: string;
-		imageUrl: string;
-		description: string;
-		descriptionSource: string;
-		descriptionLink: string;
-		attributes: Record<string, string>;
-	};
-	peopleAlsoAsk?: Array<{
-		question: string;
-		snippet: string;
-		title: string;
-		link: string;
-	}>;
-};
-
-export type ImageSearchResult = {
-	searchParameters: SearchParameters;
-	images: {
-		title: string;
-		imageUrl: string;
-		imageWidth: number;
-		imageHeight: number;
-		thumbnailUrl: string;
-		thumbnailWidth: number;
-		thumbnailHeight: number;
-		source: string;
-		domain: string;
-		link: string;
-		googleUrl: string;
-		position: number;
-		creator?: string;
-		credit?: string;
-		copyright?: string;
-	}[];
-};
-
-export type VideoSearchResult = {
-	searchParameters: SearchParameters;
-	videos: {
-		title: string;
-		link: string;
-		snippet: string;
-		imageUrl?: string;
-		videoUrl?: string;
-		duration?: string;
-		source?: string;
-		channel?: string;
-		date?: string;
-		position: number;
-	}[];
-};
-
-export const sampleData: Record<string, SearchResult> = {
+export const sampleData: Record<string, AllSearchResponse> = {
 	nike1: {
 		searchParameters: {
 			q: 'nike',
@@ -517,7 +439,7 @@ export const sampleData: Record<string, SearchResult> = {
 	},
 };
 
-export const sampleImages: Record<string, ImageSearchResult> = {
+export const sampleImages: Record<string, ImageSearchResponse> = {
 	nike: {
 		searchParameters: {
 			q: 'nike',
@@ -2222,7 +2144,7 @@ export const sampleImages: Record<string, ImageSearchResult> = {
 	},
 };
 
-export const sampleVideos: Record<string, VideoSearchResult> = {
+export const sampleVideos: Record<string, VideoSearchResponse> = {
 	nike1: {
 		searchParameters: {
 			q: 'nike',

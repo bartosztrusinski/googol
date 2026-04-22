@@ -6,10 +6,10 @@ import {
 	AccordionTrigger,
 } from '~/components/ui/accordion';
 import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card';
-import type { SearchResult } from '~/lib/sample-data';
+import type { PeopleAlsoAsk as PeopleAlsoAskData } from '~/lib/types';
 
 type Props = {
-	questions: Required<SearchResult>['peopleAlsoAsk'];
+	questions: PeopleAlsoAskData;
 };
 
 export function PeopleAlsoAsk({ questions }: Props) {

@@ -4,16 +4,16 @@ import { Link } from 'react-router';
 import { Button } from '~/components/ui/button';
 import { Card, CardDescription, CardHeader, CardTitle } from '~/components/ui/card';
 import { fetchImageSearchResults } from '~/lib/fetch-search-results';
-import type { ImageSearchResult } from '~/lib/sample-data';
+import type { ImageSearchResponse } from '~/lib/types';
 
 type Props = {
-	initialImageResults: ImageSearchResult['images'];
+	initialImageResults: ImageSearchResponse['images'];
 	query: string;
 };
 
 export function ImageSearchResults({ initialImageResults, query }: Props) {
 	const [isPending, startTransition] = useTransition();
-	const [moreResults, setMoreResults] = useState<ImageSearchResult['images']>([]);
+	const [moreResults, setMoreResults] = useState<ImageSearchResponse['images']>([]);
 	const [hasMoreResults, setHasMoreResults] = useState(initialImageResults.length > 0);
 	const [page, setPage] = useState(1);
 	const imageSearchResults = [...initialImageResults, ...moreResults];

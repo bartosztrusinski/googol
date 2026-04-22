@@ -4,16 +4,16 @@ import { Link } from 'react-router';
 import { Button } from '~/components/ui/button';
 import { Card, CardDescription, CardHeader, CardTitle } from '~/components/ui/card';
 import { fetchVideoSearchResults } from '~/lib/fetch-search-results';
-import type { VideoSearchResult } from '~/lib/sample-data';
+import type { VideoSearchResponse } from '~/lib/types';
 
 type Props = {
-	initialVideoResults: VideoSearchResult['videos'];
+	initialVideoResults: VideoSearchResponse['videos'];
 	query: string;
 };
 
 export function VideoSearchResults({ initialVideoResults, query }: Props) {
 	const [isPending, startTransition] = useTransition();
-	const [moreResults, setMoreResults] = useState<VideoSearchResult['videos']>([]);
+	const [moreResults, setMoreResults] = useState<VideoSearchResponse['videos']>([]);
 	const [hasMoreResults, setHasMoreResults] = useState(initialVideoResults.length > 0);
 	const [page, setPage] = useState(1);
 	const videoSearchResults = [...initialVideoResults, ...moreResults];

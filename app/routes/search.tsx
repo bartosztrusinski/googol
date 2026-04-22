@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import { Form, Link, redirect, useNavigation } from 'react-router';
 import { ImageSearchResults } from '~/components/image-search-results';
 import { ModeToggle } from '~/components/mode-toggle';
-import type { SearchResultItem } from '~/components/search-results';
 import { SearchResults } from '~/components/search-results';
 import { Button } from '~/components/ui/button';
 import { Field, FieldLabel } from '~/components/ui/field';
@@ -11,56 +10,14 @@ import { Input } from '~/components/ui/input';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs';
 import { VideoSearchResults } from '~/components/video-search-results';
 import {
+	fetchAllSearchResults,
 	fetchImageSearchResults,
-	fetchSearchResults,
 	fetchVideoSearchResults,
 } from '~/lib/fetch-search-results';
-import type { SearchResult } from '~/lib/sample-data';
+import { buildSearchResultItems } from '~/lib/utils';
 import type { Route } from './+types/search';
 
 const searchTypes = ['all', 'images', 'videos'] as const;
-
-function buildSearchResultItems({
-	organic,
-	relatedSearches,
-	peopleAlsoAsk,
-	batch,
-}: {
-	organic: SearchResult['organic'];
-	relatedSearches?: SearchResult['relatedSearches'];
-	peopleAlsoAsk?: SearchResult['peopleAlsoAsk'];
-	batch: number;
-}): SearchResultItem[] {
-	const resultItems = organic.map((result, index) => ({
-		type: 'result' as const,
-		key: `batch-${batch}-result-${index}-${result.link}`,
-		data: result,
-	}));
-
-	const peopleAlsoAskItem: SearchResultItem[] =
-		peopleAlsoAsk && peopleAlsoAsk.length > 0
-			? [
-					...resultItems.slice(0, 3),
-					{
-						type: 'people-also-ask' as const,
-						key: 'people-also-ask',
-						data: peopleAlsoAsk,
-					},
-					...resultItems.slice(3),
-				]
-			: resultItems;
-
-	return relatedSearches && relatedSearches.length > 0
-		? [
-				...peopleAlsoAskItem,
-				{
-					type: 'related-searches' as const,
-					key: `related-searches-batch-${batch}`,
-					data: relatedSearches,
-				},
-			]
-		: peopleAlsoAskItem;
-}
 
 export async function loader({ request }: Route.LoaderArgs) {
 	const url = new URL(request.url);
@@ -90,16 +47,17 @@ export async function loader({ request }: Route.LoaderArgs) {
 		};
 	}
 
-	const { organic, relatedSearches, knowledgeGraph, peopleAlsoAsk } = await fetchSearchResults(
+	const { organic, relatedSearches, knowledgeGraph, peopleAlsoAsk } = await fetchAllSearchResults(
 		query,
 		1,
 	);
+
 	return {
 		results: buildSearchResultItems({
 			organic,
 			relatedSearches,
 			peopleAlsoAsk,
-			batch: 0,
+			page: 0,
 		}),
 		relatedSearches,
 		knowledgeGraph,
@@ -216,8 +174,8 @@ export default function Search({ loaderData }: Route.ComponentProps) {
 							</TabsContent>
 							<TabsContent value="videos" className="space-y-3">
 								<VideoSearchResults
-									initialVideoResults={searchType === 'videos' ? results : []}
 									query={query}
+									initialVideoResults={searchType === 'videos' ? results : []}
 								/>
 							</TabsContent>
 						</>

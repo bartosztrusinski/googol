@@ -1,9 +1,7 @@
 import { ChevronRight } from 'lucide-react';
 import { Link } from 'react-router';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '~/components/ui/card';
-import type { SearchResult } from '~/lib/sample-data';
-
-type Props = Required<SearchResult>['knowledgeGraph'];
+import type { KnowledgeGraph as KnowledgeGraphProps } from '~/lib/types';
 
 export function KnowledgeGraph({
 	title,
@@ -12,7 +10,7 @@ export function KnowledgeGraph({
 	descriptionLink,
 	descriptionSource,
 	attributes,
-}: Props) {
+}: KnowledgeGraphProps) {
 	return (
 		<Card className="shadow p-3">
 			<CardHeader className="p-0 gap-3">

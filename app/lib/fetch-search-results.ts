@@ -1,12 +1,14 @@
 import { sampleData, sampleImages, sampleVideos } from '~/lib/sample-data';
 import type { AllSearchResponse, ImageSearchResponse, VideoSearchResponse } from '~/lib/types';
 
+const FETCH_DELAY = 1000;
+
 export async function fetchAllSearchResults(
 	query: string,
 	page: number,
 	showGenericResults = true,
 ): Promise<AllSearchResponse> {
-	await new Promise((resolve) => setTimeout(resolve, 1000));
+	await new Promise((resolve) => setTimeout(resolve, FETCH_DELAY));
 	return query + page in sampleData
 		? sampleData[query + page]
 		: showGenericResults
@@ -23,7 +25,7 @@ export async function fetchImageSearchResults(
 	query: string,
 	page: number,
 ): Promise<ImageSearchResponse> {
-	await new Promise((resolve) => setTimeout(resolve, 1000));
+	await new Promise((resolve) => setTimeout(resolve, FETCH_DELAY));
 	const { images, searchParameters } = sampleImages[query] ?? {
 		searchParameters: { query, page },
 		images: [],
@@ -44,7 +46,7 @@ export async function fetchVideoSearchResults(
 	query: string,
 	page: number,
 ): Promise<VideoSearchResponse> {
-	await new Promise((resolve) => setTimeout(resolve, 1000));
+	await new Promise((resolve) => setTimeout(resolve, FETCH_DELAY));
 	return query + page in sampleVideos
 		? sampleVideos[query + page]
 		: {

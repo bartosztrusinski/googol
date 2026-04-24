@@ -92,6 +92,7 @@ export default function Search({ loaderData }: Route.ComponentProps) {
 	const isSearching = Boolean(isSearchNavigation);
 	const isSearchSubmit = formAction === '/search' && formMethod === 'GET';
 	const normalizedInputQuery = normalizeQueryInput(inputQuery);
+	const tabQuery = isSearching ? normalizedInputQuery || pendingQuery || query : query;
 	const isDuplicatePendingSubmit =
 		isSearching && pendingQuery === normalizedInputQuery && pendingType === searchType;
 
@@ -163,7 +164,7 @@ export default function Search({ loaderData }: Route.ComponentProps) {
 									<Link
 										to={{
 											pathname: '/search',
-											search: `?q=${encodeURIComponent(query)}&type=${type}`,
+											search: `?q=${encodeURIComponent(tabQuery)}&type=${type}`,
 										}}
 									>
 										{formatSearchTypeLabel(type)}

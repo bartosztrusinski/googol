@@ -1,6 +1,8 @@
 import { LoaderCircle, SearchIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Form, Link, redirect, useNavigation } from 'react-router';
+import { AllResultsSkeleton } from '~/components/all-results-skeleton';
+import { ImageResultsSkeleton } from '~/components/image-results-skeleton';
 import { ImageSearchResults } from '~/components/image-search-results';
 import { ModeToggle } from '~/components/mode-toggle';
 import { SearchResults } from '~/components/search-results';
@@ -8,6 +10,7 @@ import { Button } from '~/components/ui/button';
 import { Field, FieldLabel } from '~/components/ui/field';
 import { Input } from '~/components/ui/input';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs';
+import { VideoResultsSkeleton } from '~/components/video-results-skeleton';
 import { VideoSearchResults } from '~/components/video-search-results';
 import {
 	fetchAllSearchResults,
@@ -17,71 +20,16 @@ import {
 import { buildSearchResultItems, cn } from '~/lib/utils';
 import type { Route } from './+types/search';
 
+type SearchType = (typeof searchTypes)[number];
+
 const searchTypes = ['all', 'images', 'videos'] as const;
 
 function normalizeQueryInput(value: string | null | undefined) {
 	return value?.replace(/\s+/g, ' ').trim() ?? '';
 }
 
-function formatSearchTypeLabel(type: (typeof searchTypes)[number]) {
+function formatSearchTypeLabel(type: SearchType) {
 	return type.charAt(0).toUpperCase() + type.slice(1);
-}
-
-function PendingResultsSkeleton({ searchType }: { searchType: (typeof searchTypes)[number] }) {
-	if (searchType === 'images') {
-		const imageSkeletonIds = [
-			'image-a',
-			'image-b',
-			'image-c',
-			'image-d',
-			'image-e',
-			'image-f',
-			'image-g',
-			'image-h',
-			'image-i',
-			'image-j',
-		];
-		return (
-			<ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 gap-y-4">
-				{imageSkeletonIds.map((id) => (
-					<li key={id} className="space-y-2">
-						<div className="h-28 rounded-xl bg-muted animate-pulse" />
-						<div className="h-3 w-11/12 rounded bg-muted animate-pulse" />
-						<div className="h-3 w-2/3 rounded bg-muted animate-pulse" />
-					</li>
-				))}
-			</ul>
-		);
-	}
-
-	if (searchType === 'videos') {
-		const videoSkeletonIds = ['video-a', 'video-b', 'video-c', 'video-d', 'video-e', 'video-f'];
-		return (
-			<ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-				{videoSkeletonIds.map((id) => (
-					<li key={id} className="rounded-lg border bg-card p-2">
-						<div className="h-24 rounded bg-muted animate-pulse" />
-						<div className="mt-2 h-3 w-5/6 rounded bg-muted animate-pulse" />
-						<div className="mt-2 h-3 w-2/3 rounded bg-muted animate-pulse" />
-					</li>
-				))}
-			</ul>
-		);
-	}
-
-	const allSkeletonIds = ['all-a', 'all-b', 'all-c', 'all-d', 'all-e', 'all-f'];
-	return (
-		<ul className="space-y-4">
-			{allSkeletonIds.map((id) => (
-				<li key={id} className="rounded-xl border bg-card p-4 shadow space-y-3">
-					<div className="h-4 w-2/5 rounded bg-muted animate-pulse" />
-					<div className="h-6 w-4/5 rounded bg-muted animate-pulse" />
-					<div className="h-4 w-full rounded bg-muted animate-pulse" />
-					<div className="h-4 w-11/12 rounded bg-muted animate-pulse" />
-				</li>
-			))}
-		</ul>
-	);
 }
 
 export async function loader({ request }: Route.LoaderArgs) {
@@ -136,12 +84,16 @@ export default function Search({ loaderData }: Route.ComponentProps) {
 	const { results, knowledgeGraph, query, searchType } = loaderData;
 	const { formAction, formMethod, location } = useNavigation();
 	const nextSearchParams = location ? new URLSearchParams(location.search) : null;
+	const pendingQuery = normalizeQueryInput(nextSearchParams?.get('q'));
 	const pendingType: (typeof searchTypes)[number] =
 		searchTypes.find((type) => type === nextSearchParams?.get('type')) ?? searchType;
 	const isSearchNavigation = location?.pathname === '/search';
 	const [inputQuery, setInputQuery] = useState(query);
 	const isSearching = Boolean(isSearchNavigation);
 	const isSearchSubmit = formAction === '/search' && formMethod === 'GET';
+	const normalizedInputQuery = normalizeQueryInput(inputQuery);
+	const isDuplicatePendingSubmit =
+		isSearching && pendingQuery === normalizedInputQuery && pendingType === searchType;
 
 	function trimQueryInput() {
 		setInputQuery((prevInput) => prevInput.replace(/\s+/g, ' ').trim());
@@ -183,7 +135,6 @@ export default function Search({ loaderData }: Route.ComponentProps) {
 							className="h-auto rounded-2xl px-4 shadow-md dark:bg-secondary"
 							value={inputQuery}
 							onChange={(event) => setInputQuery(event.target.value)}
-							disabled={isSearching}
 							required
 						/>
 						<input type="hidden" name="type" value={searchType} />
@@ -191,7 +142,7 @@ export default function Search({ loaderData }: Route.ComponentProps) {
 							type="submit"
 							size="icon-lg"
 							className="size-11 rounded-2xl"
-							disabled={isSearching}
+							disabled={isDuplicatePendingSubmit}
 						>
 							{isSearchSubmit ? <LoaderCircle className="animate-spin" /> : <SearchIcon />}
 							<span className="sr-only">Search</span>
@@ -203,7 +154,7 @@ export default function Search({ loaderData }: Route.ComponentProps) {
 				<Tabs value={searchType} className="gap-4 py-4 px-2" aria-busy={isSearching}>
 					<TabsList className="gap-1">
 						{searchTypes.map((type) => {
-							return type === searchType || isSearching ? (
+							return type === searchType ? (
 								<TabsTrigger key={type} value={type}>
 									{formatSearchTypeLabel(type)}
 								</TabsTrigger>
@@ -221,7 +172,15 @@ export default function Search({ loaderData }: Route.ComponentProps) {
 							);
 						})}
 					</TabsList>
-					{results.length === 0 && !isSearching ? (
+					{results.length === 0 && isSearching ? (
+						pendingType === 'images' ? (
+							<ImageResultsSkeleton />
+						) : pendingType === 'videos' ? (
+							<VideoResultsSkeleton />
+						) : (
+							<AllResultsSkeleton />
+						)
+					) : results.length === 0 && !isSearching ? (
 						<p className="text-center text-muted-foreground">No results found for "{query}"</p>
 					) : (
 						<div className="space-y-4">
@@ -264,9 +223,6 @@ export default function Search({ loaderData }: Route.ComponentProps) {
 								/>
 							</TabsContent>
 						</div>
-					)}
-					{isSearching && results.length === 0 && (
-						<PendingResultsSkeleton searchType={pendingType} />
 					)}
 				</Tabs>
 			</main>
